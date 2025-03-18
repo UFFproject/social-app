@@ -16,21 +16,25 @@
         "name": "next"
       }
     ],
+    "types": ["jest", "node"],
+    "strict": false,
+    "isolatedModules": true,
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
-    },
-    "outDir": "dist",
-    "rootDir": "src",
-    "tsBuildInfoFile": "dist/tsconfig.tsbuildinfo"
+      "@/*": ["./src/*"],
+      "@libs/ui": ["../../libs/ui/src/index.ts"],
+      "@libs/ui/*": ["../../libs/ui/src/*"]
+    }
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.js",
-    "src/**/*.jsx",
     "../../apps/uff/.next/types/**/*.ts",
     "../../dist/apps/uff/.next/types/**/*.ts",
-    "next-env.d.ts"
+    "next-env.d.ts",
+    "src/**/*.js",
+    "src/**/*.jsx",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "out-tsc",
