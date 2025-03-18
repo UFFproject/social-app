@@ -1,20 +1,22 @@
 {
   "compilerOptions": {
-    "composite": true,
-    "declarationMap": true,
-    "emitDeclarationOnly": true,
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "importHelpers": true,
-    "isolatedModules": true,
-    "lib": ["es2022"],
+    "target": "es2015",
     "module": "esnext",
-    "moduleResolution": "bundler",
-    "noEmitOnError": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitOverride": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
+    "lib": ["es2020", "dom"],
     "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
     "strict": true,
-    "target": "es2022"
-  }
+    "noUnusedLocals": true,
+    "noImplicitReturns": true,
+    "noImplicitOverride": true,
+    "noEmitOnError": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "exclude": ["node_modules"]
 }
