@@ -17,6 +17,7 @@
     "noImplicitOverride": true,
     "noEmitOnError": true,
     "noFallthroughCasesInSwitch": true,
+    "baseUrl": ".",
     "paths": {
       "@uff/db": ["libs/db/src/index.ts"]
     }
