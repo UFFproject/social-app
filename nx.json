@@ -31,7 +31,8 @@
           "buildDepsName": "build-deps",
           "watchDepsName": "watch-deps"
         }
-      }
+      },
+      "exclude": ["libs/db/*"]
     },
     {
       "plugin": "@nx/next/plugin",
@@ -65,6 +66,15 @@
         "targetName": "test"
       },
       "exclude": ["hono-e2e/**/*", "apps/hono-e2e/**/*"]
+    },
+    {
+      "plugin": "@nx/js/typescript",
+      "include": ["libs/db/*"],
+      "options": {
+        "typecheck": {
+          "targetName": "typecheck"
+        }
+      }
     }
   ],
   "targetDefaults": {

@@ -16,7 +16,10 @@
     "noImplicitReturns": true,
     "noImplicitOverride": true,
     "noEmitOnError": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "@uff/db": ["libs/db/src/index.ts"]
+    }
   },
   "exclude": ["node_modules"]
 }
