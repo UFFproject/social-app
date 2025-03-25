@@ -1,0 +1,15 @@
+.pnpm
+npm-debug.log
+**/README.md
+**/LICENSE
+.vscode
+.git/
+.gitignore
+.github
+.env
+.dockerignore
+**/.next/
+**/fly.toml
+node_modules/
+!node_modules/@prisma/*
+.nx/
