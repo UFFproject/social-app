@@ -1,4 +1,4 @@
-import Header from '@/components/header';
+import { Toaster } from '@libs/ui/sonner';
 import './global.css';
 
 export const metadata = {
@@ -14,8 +14,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Header />
         {children}
+        <Toaster richColors />
       </body>
     </html>
   );
