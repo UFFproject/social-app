@@ -1,7 +1,7 @@
 {
-  "name": "hono",
+  "name": "api",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/hono/src",
+  "sourceRoot": "apps/api/src",
   "projectType": "application",
   "tags": [],
   "targets": {
@@ -11,12 +11,12 @@
       "defaultConfiguration": "production",
       "options": {
         "platform": "node",
-        "outputPath": "dist/apps/hono",
+        "outputPath": "dist/apps/api",
         "format": ["cjs"],
         "bundle": false,
-        "main": "apps/hono/src/main.ts",
-        "tsConfig": "apps/hono/tsconfig.app.json",
-        "assets": ["apps/hono/src/assets"],
+        "main": "apps/api/src/main.ts",
+        "tsConfig": "apps/api/tsconfig.app.json",
+        "assets": ["apps/api/src/assets"],
         "generatePackageJson": true,
         "esbuildOptions": {
           "sourcemap": true,
@@ -42,15 +42,15 @@
       "defaultConfiguration": "development",
       "dependsOn": ["build"],
       "options": {
-        "buildTarget": "hono:build",
+        "buildTarget": "api:build",
         "runBuildTargetDependencies": false
       },
       "configurations": {
         "development": {
-          "buildTarget": "hono:build:development"
+          "buildTarget": "api:build:development"
         },
         "production": {
-          "buildTarget": "hono:build:production"
+          "buildTarget": "api:build:production"
         }
       }
     },

@@ -1,5 +1,5 @@
 export default {
-  displayName: 'hono-e2e',
+  displayName: 'api-e2e',
   preset: '../../jest.preset.js',
   setupFiles: ['<rootDir>/src/test-setup.ts'],
   testEnvironment: 'node',
@@ -12,5 +12,5 @@ export default {
     ],
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../coverage/hono-e2e',
+  coverageDirectory: '../../coverage/api-e2e',
 };
