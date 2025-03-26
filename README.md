@@ -79,5 +79,5 @@ docker exec -it uff pnpx nx serve api
 To create a new library, you can run the following command:
 
 ```bash
-npx nx g @nx/js:library --directory=libs/api/<..> --importPath=@uff/library-name --name=library-name
+docker exec -it uff pnpx nx g @nx/js:library --directory=libs/api/<..> --importPath=@uff/library-name --name=library-name
 ```
