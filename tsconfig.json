@@ -2,18 +2,5 @@
   "extends": "./tsconfig.base.json",
   "compileOnSave": false,
   "files": [],
-  "references": [
-    {
-      "path": "./apps/uff-e2e"
-    },
-    {
-      "path": "./apps/uff"
-    },
-    {
-      "path": "./apps/hono-e2e"
-    },
-    {
-      "path": "./apps/hono"
-    }
-  ]
+  "references": []
 }
