@@ -57,21 +57,21 @@ pnpm i
 
 ## How to run the project
 
-<!-- ```bash
+### Development
+```bash
 docker-compose up -d
-docker exec -it uff-app npm run nx -- serve api
-``` -->
+```
 
 ##### Next.js App
 
 ```bash
-pnpm nx dev uff
+docker exec -it uff pnpx nx dev uff
 ```
 
 ##### Hono API
 
 ```bash
-pnpm nx serve hono
+docker exec -it uff pnpx nx serve api
 ```
 
 ## How to develop the project
