@@ -16,9 +16,11 @@ model User {
 
   profile Profile?
 
-  sentInvites     FriendInvite[] @relation("SentInvites")
-  receivedInvites FriendInvite[] @relation("ReceivedInvites")
-  ChatUser        ChatUser[]
+  sentInvites         FriendInvite[]        @relation("SentInvites")
+  receivedInvites     FriendInvite[]        @relation("ReceivedInvites")
+  ChatUser            ChatUser[]
+  Message             Message[]
+  ReactionForMessages ReactionForMessages[]
 
   @@map("users")
 }
@@ -73,6 +75,7 @@ model Chat {
   deletedAt DateTime?
   type      ChatType
   ChatUser  ChatUser[]
+  Message   Message[]
 
   @@map("chats")
 }
@@ -87,4 +90,37 @@ model ChatUser {
 
   @@id([userId, chatId])
   @@map("chat_users")
+}
+
+model Message {
+  id        String    @id @default(uuid(7)) @db.Uuid
+  chatId    String
+  userId    String
+  content   String    @db.VarChar(1000)
+  deletedAt DateTime?
+  updatedAt DateTime  @updatedAt
+  seenAt    DateTime?
+
+  chat                Chat                  @relation(fields: [chatId], references: [id])
+  user                User                  @relation(fields: [userId], references: [id])
+  ReactionForMessages ReactionForMessages[]
+
+  @@map("messages")
+}
+
+enum ReactionType {
+  LIKE
+  DISLIKE
+}
+
+model ReactionForMessages {
+  userId    String
+  messageId String
+  type      ReactionType
+
+  user    User    @relation(fields: [userId], references: [id])
+  message Message @relation(fields: [messageId], references: [id])
+
+  @@id([userId, messageId, type])
+  @@map("reaction_for_messages")
 }
