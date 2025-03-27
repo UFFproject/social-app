@@ -14,13 +14,13 @@ services:
     ports:
       - '6379:6379'
 
-  mysql:
+  postgres:
     environment:
       MYSQL_DATABASE: 'uff'
       MYSQL_ALLOW_EMPTY_PASSWORD: true
     expose:
       - '3306'
-    image: mysql:9.0.1
+    image: postgres:17.1
     platform: linux/x86_64 # sorry, my fellow arm user
     restart: always
     ports:
