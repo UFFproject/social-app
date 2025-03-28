@@ -1,37 +1,36 @@
 services:
-  main:
-    build: .
-    container_name: uff
-    tty: true
-    ports:
-      - '3000:3000'
-      - '4200:4200'
-    volumes:
-      - .:/src/app
-    environment:
-      DATABASE_URL: 'postgresql://uff:Sup3rSecre!P4ssw0rd@postgres:5432/uffdb?schema=public'
-
-  redis:
-    image: 'redis:alpine'
-    ports:
-      - '6379:6379'
-
   postgres:
     image: postgres:17.4-alpine
+    container_name: uff-postgres
     environment:
       POSTGRES_USER: 'uff'
       POSTGRES_PASSWORD: 'Sup3rSecre!P4ssw0rd'
       POSTGRES_DB: 'uffdb'
       PGDATA: '/data/postgres'
+    ports:
+      - '5432:5432'
     restart: always
     volumes:
       - db:/data/postgres
 
-  adminer:
-    image: adminer
-    restart: always
+  node-app:
+    build:
+      context: .
+      dockerfile: ./apps/api/Dockerfile
+    container_name: hono-app
     ports:
-      - '8080:8080'
+      - '3000:3000'
+    environment:
+      - DATABASE_URL=postgresql://uff:Sup3rSecre!P4ssw0rd@postgres:5432/uffdb?schema=public
+      - NODE_ENV=development
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    volumes:
+      - ./apps/api:/usr/src/app/apps/api
+      - ./libs:/usr/src/app/libs
+      - /usr/src/app/node_modules
+      - /usr/src/app/apps/api/node_modules
 
 volumes:
   db:
