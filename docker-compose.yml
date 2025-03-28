@@ -8,6 +8,8 @@ services:
       - '4200:4200'
     volumes:
       - .:/src/app
+    environment:
+      DATABASE_URL: 'postgresql://uff:Sup3rSecre!P4ssw0rd@postgres:5432/uffdb?schema=public'
 
   redis:
     image: 'redis:alpine'
@@ -15,18 +17,21 @@ services:
       - '6379:6379'
 
   postgres:
+    image: postgres:17.4-alpine
     environment:
-      MYSQL_DATABASE: 'uff'
-      MYSQL_ALLOW_EMPTY_PASSWORD: true
-    expose:
-      - '3306'
-    image: postgres:17.1
-    platform: linux/x86_64 # sorry, my fellow arm user
+      POSTGRES_USER: 'uff'
+      POSTGRES_PASSWORD: 'Sup3rSecre!P4ssw0rd'
+      POSTGRES_DB: 'uffdb'
+      PGDATA: '/data/postgres'
+    restart: always
+    volumes:
+      - db:/data/postgres
+
+  adminer:
+    image: adminer
     restart: always
     ports:
-      - '3306:3306'
-    volumes:
-      - uffdb:/var/lib/mysql
+      - '8080:8080'
 
 volumes:
-  uffdb:
+  db:
