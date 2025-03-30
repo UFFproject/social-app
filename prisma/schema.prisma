@@ -21,6 +21,8 @@ model User {
   ChatUser            ChatUser[]
   Message             Message[]
   ReactionForMessages ReactionForMessages[]
+  CommunityMember     CommunityMember[]
+  Post                Post[]
 
   @@map("users")
 }
@@ -37,7 +39,7 @@ model Profile {
   languages    String   @default("Unknown") @db.Text
   relationship String?
 
-  userId String @unique
+  userId String @unique @db.Uuid
   user   User   @relation(fields: [userId], references: [id])
 
   @@map("profiles")
@@ -51,8 +53,8 @@ enum InviteStatus {
 
 model FriendInvite {
   id         String       @id @default(uuid(7)) @db.Uuid
-  senderId   String
-  receiverId String
+  senderId   String       @db.Uuid
+  receiverId String       @db.Uuid
   isAccepted InviteStatus @default(PENDING)
   sentAt     DateTime     @default(now())
 
@@ -81,8 +83,8 @@ model Chat {
 }
 
 model ChatUser {
-  userId             String
-  chatId             String
+  userId             String @db.Uuid
+  chatId             String @db.Uuid
   permissionBitfield BigInt
 
   user User @relation(fields: [userId], references: [id])
@@ -94,8 +96,8 @@ model ChatUser {
 
 model Message {
   id        String    @id @default(uuid(7)) @db.Uuid
-  chatId    String
-  userId    String
+  chatId    String    @db.Uuid
+  userId    String    @db.Uuid
   content   String    @db.VarChar(1000)
   deletedAt DateTime?
   updatedAt DateTime  @updatedAt
@@ -114,8 +116,8 @@ enum ReactionType {
 }
 
 model ReactionForMessages {
-  userId    String
-  messageId String
+  userId    String       @db.Uuid
+  messageId String       @db.Uuid
   type      ReactionType
 
   user    User    @relation(fields: [userId], references: [id])
@@ -123,4 +125,49 @@ model ReactionForMessages {
 
   @@id([userId, messageId, type])
   @@map("reaction_for_messages")
+}
+
+model Community {
+  id              String            @id @default(uuid(7)) @db.Uuid
+  name            String            @db.VarChar(255)
+  description     String            @db.VarChar(1000)
+  icon            String            @db.VarChar(255)
+  createdAt       DateTime          @default(now())
+  CommunityMember CommunityMember[]
+  Post            Post[]
+
+  @@map("communities")
+}
+
+model CommunityMember {
+  communityId String  @db.Uuid
+  userId      String  @db.Uuid
+  restricted  Boolean @default(false)
+
+  community Community @relation(fields: [communityId], references: [id])
+  user      User      @relation(fields: [userId], references: [id])
+
+  @@id([communityId, userId])
+  @@map("community_members")
+}
+
+enum PostVisibility {
+  PUBLIC
+  PRIVATE
+  COMMUNITY_ONLY
+}
+
+model Post {
+  id          String         @id @default(uuid(7)) @db.Uuid
+  authorId    String         @db.Uuid
+  textContent String?        @db.VarChar(5000)
+  imagine     String?        @db.VarChar(1000)
+  communityId String         @db.Uuid
+  createdAt   DateTime       @default(now())
+  visibility  PostVisibility
+
+  author    User      @relation(fields: [authorId], references: [id])
+  community Community @relation(fields: [communityId], references: [id])
+
+  @@map("posts")
 }
