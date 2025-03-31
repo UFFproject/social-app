@@ -23,6 +23,8 @@ model User {
   ReactionForMessages ReactionForMessages[]
   CommunityMember     CommunityMember[]
   Post                Post[]
+  ReactionForPost     ReactionForPost[]
+  PostComment         PostComment[]
 
   @@map("users")
 }
@@ -177,8 +179,35 @@ model Post {
   createdAt   DateTime       @default(now())
   visibility  PostVisibility
 
-  author    User      @relation(fields: [authorId], references: [id])
-  community Community @relation(fields: [communityId], references: [id])
+  author          User              @relation(fields: [authorId], references: [id])
+  community       Community         @relation(fields: [communityId], references: [id])
+  ReactionForPost ReactionForPost[]
+  PostComment     PostComment[]
 
   @@map("posts")
+}
+
+model ReactionForPost {
+  id       String       @id @default(uuid(7)) @db.Uuid
+  postId   String       @db.Uuid
+  authorId String       @db.Uuid
+  type     ReactionType
+
+  post   Post @relation(fields: [postId], references: [id])
+  author User @relation(fields: [authorId], references: [id])
+
+  @@map("reaction_for_post")
+}
+
+model PostComment {
+  id          String   @id @default(uuid(7)) @db.Uuid
+  postId      String   @db.Uuid
+  authorId    String   @db.Uuid
+  textContent String   @db.VarChar(2000)
+  createdAt   DateTime @default(now())
+
+  post   Post @relation(fields: [postId], references: [id])
+  author User @relation(fields: [authorId], references: [id])
+
+  @@map("post_comments")
 }
