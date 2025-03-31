@@ -127,6 +127,15 @@ model ReactionForMessages {
   @@map("reaction_for_messages")
 }
 
+model CommunityRole {
+  id              Int               @db.Integer
+  name            String
+  CommunityMember CommunityMember[]
+
+  @@id([id])
+  @@map("community_roles")
+}
+
 model Community {
   id              String            @id @default(uuid(7)) @db.Uuid
   name            String            @db.VarChar(255)
@@ -143,9 +152,11 @@ model CommunityMember {
   communityId String  @db.Uuid
   userId      String  @db.Uuid
   restricted  Boolean @default(false)
+  roleId      Int     @db.Integer
 
-  community Community @relation(fields: [communityId], references: [id])
-  user      User      @relation(fields: [userId], references: [id])
+  role      CommunityRole @relation(fields: [roleId], references: [id])
+  community Community     @relation(fields: [communityId], references: [id])
+  user      User          @relation(fields: [userId], references: [id])
 
   @@id([communityId, userId])
   @@map("community_members")
