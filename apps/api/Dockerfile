@@ -10,11 +10,8 @@ RUN pnpm install
 
 COPY . .
 
-FROM base AS api-dev
-
-# Generate Prisma client
 RUN pnpm prisma generate
 
 EXPOSE 3000
 
-CMD ["pnpm", "nx", "serve", "api", "--host", "0.0.0.0"] 
+CMD ["pnpm", "nx", "serve", "api"] 

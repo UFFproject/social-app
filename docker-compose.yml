@@ -13,16 +13,16 @@ services:
     volumes:
       - db:/data/postgres
 
-  node-app:
+  api:
     build:
       context: .
-      dockerfile: ./apps/api/Dockerfile
-    container_name: hono-app
+      dockerfile: apps/api/Dockerfile
+    container_name: api
     ports:
       - '3000:3000'
     environment:
-      - DATABASE_URL=postgresql://uff:Sup3rSecre!P4ssw0rd@postgres:5432/uffdb?schema=public
       - NODE_ENV=development
+      - DATABASE_URL=postgresql://uff:Sup3rSecre!P4ssw0rd@postgres:5432/uffdb?schema=public
     depends_on:
       - postgres
     restart: unless-stopped
@@ -31,6 +31,25 @@ services:
       - ./libs:/usr/src/app/libs
       - /usr/src/app/node_modules
       - /usr/src/app/apps/api/node_modules
+
+  uff:
+    build:
+      context: .
+      dockerfile: apps/uff/Dockerfile
+    container_name: uff
+    ports:
+      - '4000:4000'
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - postgres
+      - api
+    restart: unless-stopped
+    volumes:
+      - ./apps/uff:/usr/src/app/apps/uff
+      - ./libs:/usr/src/app/libs
+      - /usr/src/app/node_modules
+      - /usr/src/app/apps/uff/node_modules
 
 volumes:
   db:
