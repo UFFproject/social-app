@@ -58,20 +58,9 @@ pnpm i
 ## How to run the project
 
 ### Development
-```bash
-docker-compose up -d
-```
-
-##### Next.js App
 
 ```bash
-docker exec -it uff pnpx nx dev uff
-```
-
-##### Hono API
-
-```bash
-docker exec -it uff pnpx nx serve api
+docker-compose up
 ```
 
 ## How to develop the project
@@ -79,5 +68,5 @@ docker exec -it uff pnpx nx serve api
 To create a new library, you can run the following command:
 
 ```bash
-docker exec -it uff pnpx nx g @nx/js:library --directory=libs/api/<..> --importPath=@uff/library-name --name=library-name
+pnpm nx g @nx/js:library --directory=libs/api/<..> --importPath=@uff/library-name --name=library-name
 ```
