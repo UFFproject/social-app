@@ -1,5 +1,5 @@
 services:
-  database:
+  uff-database:
     image: postgres:17.4-alpine
     container_name: uff-database
     platform: linux/x86_64
@@ -25,25 +25,25 @@ services:
       - '3000:3000'
       - '9229:9229'
     depends_on:
-      - database
+      - uff-database
     restart: unless-stopped
     volumes:
       - .:/app
       - /app/node_modules
       - pnpm-store:/pnpm/store
 
-  uff:
+  uff-web:
     build:
       context: .
       dockerfile: apps/uff/Dockerfile
-    container_name: uff
+    container_name: uff-web
     ports:
       - '4000:4000'
     environment:
       - NODE_ENV=development
     depends_on:
-      - postgres
-      - api
+      - uff-api
+      - uff-database
     restart: unless-stopped
     volumes:
       - ./apps/uff:/usr/src/app/apps/uff
