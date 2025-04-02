@@ -22,7 +22,8 @@ COPY . .
 EXPOSE 3000
 EXPOSE 9229
 
-# Build prisma client
-RUN pnpm nx run prisma:generate
+COPY entrypoint.api.sh /entrypoint.api.sh
+RUN chmod +x /entrypoint.api.sh
+ENTRYPOINT [ "/entrypoint.api.sh" ]
 
 CMD [ "pnpm", "nx", "serve", "api" ]

@@ -28,5 +28,5 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("UFF_DB_URL")
 }
