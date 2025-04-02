@@ -19,15 +19,15 @@ model User {
 }
 
 model Profile {
-  id           String   @id @default(uuid(7)) @db.Uuid
+  id           String    @id @default(uuid(7)) @db.Uuid
   name         String?
   surname      String?
-  dateOfBirth  DateTime
-  gender       String
-  nationality  String   @default("Unknown") @db.Text
-  fieldOfStudy String   @default("Unknown") @db.Text
-  yearOfStudy  Int
-  languages    String   @default("Unknown") @db.Text
+  dateOfBirth  DateTime?
+  gender       String?
+  nationality  String?   @default("Unknown") @db.Text
+  fieldOfStudy String?   @default("Unknown") @db.Text
+  yearOfStudy  Int?
+  languages    String?   @default("Unknown") @db.Text
   relationship String?
 
   userId String @unique @db.Uuid
