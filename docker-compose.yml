@@ -21,8 +21,6 @@ services:
     container_name: uff-main
     env_file:
       - .env.development
-    # environment:
-    #   - NODE_OPTIONS=--inspect=0.0.0.0:9229
     ports:
       - '3000:3000'
       - '9229:9229'
