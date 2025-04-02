@@ -21,6 +21,7 @@
     "paths": {
       "@/uff-db": ["libs/db/src/index.ts"],
       "@/uff-prisma": ["libs/prisma/src/index.ts"],
+      "@uff/auth": ["libs/auth/src/index.ts"]
     }
   },
   "exclude": ["node_modules"]
