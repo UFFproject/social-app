@@ -234,6 +234,8 @@ importers:
 
   apps/uff-e2e: {}
 
+  libs/prisma: {}
+
 packages:
 
   '@adobe/css-tools@4.3.3':
