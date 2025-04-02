@@ -19,7 +19,8 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "@uff/db": ["libs/db/src/index.ts"]
+      "@/uff-db": ["libs/db/src/index.ts"],
+      "@/uff-prisma": ["libs/prisma/src/index.ts"],
     }
   },
   "exclude": ["node_modules"]

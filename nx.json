@@ -64,7 +64,7 @@
       "options": {
         "targetName": "test"
       },
-      "exclude": ["hono-e2e/**/*", "apps/hono-e2e/**/*"]
+      "exclude": ["api-e2e/**/*", "apps/api-e2e/**/*"]
     },
     {
       "plugin": "@nx/js/typescript",
