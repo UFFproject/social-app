@@ -26,4 +26,3 @@ EXPOSE 9229
 RUN pnpm nx run prisma:generate
 
 CMD [ "pnpm", "nx", "serve", "api" ]
-# CMD [ "tail", "-f", "/dev/null" ]

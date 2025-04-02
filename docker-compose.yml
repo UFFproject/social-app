@@ -14,11 +14,11 @@ services:
     volumes:
       - db:/data/postgres
 
-  uff-main:
+  uff-api:
     build:
       context: .
       dockerfile: ./apps/api/Dockerfile
-    container_name: uff-main
+    container_name: uff-api
     env_file:
       - .env.development
     ports:
@@ -31,6 +31,25 @@ services:
       - .:/app
       - /app/node_modules
       - pnpm-store:/pnpm/store
+
+  uff:
+    build:
+      context: .
+      dockerfile: apps/uff/Dockerfile
+    container_name: uff
+    ports:
+      - '4000:4000'
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - postgres
+      - api
+    restart: unless-stopped
+    volumes:
+      - ./apps/uff:/usr/src/app/apps/uff
+      - ./libs:/usr/src/app/libs
+      - /usr/src/app/node_modules
+      - /usr/src/app/apps/uff/node_modules
 
 volumes:
   db:
