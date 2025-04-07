@@ -1,5 +1,8 @@
 import * as bcryptjs from 'bcryptjs';
 import { sign, verify } from 'hono/jwt';
+import {User} from '@prisma/client';
+
+
 
 export async function verifyUserPassword(password : string, hashedPassword: string) {
   return bcryptjs.compare(password, hashedPassword);
@@ -9,7 +12,7 @@ export async function hashPassword(password: string) {
   return bcryptjs.hash(password, 12);
 }
 
-export async function createAuthToken(user: any) {
+export async function createAuthToken(user: User) {
   const secret = process.env['JWT_ACCESS_SECRET'];
 
   if (!secret)
@@ -30,8 +33,4 @@ export async function decodeAuthToken(token: string) {
     return false;
 
   return verify(token, secret);
-}
-
-export function validateEmail(email: string) {
-  return /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i.test(email);
 }
