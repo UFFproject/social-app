@@ -1,0 +1,49 @@
+{
+  "name": "prisma",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/prisma/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "generate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "prisma generate --schema=./src/schema",
+        "cwd": "libs/prisma"
+      }
+    },
+    "push": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "prisma db push --schema=./src/schema",
+        "cwd": "libs/prisma"
+      }
+    },
+    "migrate-deploy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "dotenv -- prisma migrate deploy --schema=./src/schema",
+        "cwd": "libs/prisma"
+      }
+    },
+    "migrate-dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "dotenv -- prisma migrate dev --schema=./src/schema --name={args.name}",
+        "cwd": "libs/prisma"
+      }
+    },
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/prisma",
+        "main": "libs/prisma/src/index.ts",
+        "tsConfig": "libs/prisma/tsconfig.lib.json",
+        "assets": ["libs/prisma/*.md"],
+        "format": ["cjs"],
+        "generatePackageJson": true
+      }
+    }
+  }
+}

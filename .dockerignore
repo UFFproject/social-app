@@ -10,6 +10,7 @@ npm-debug.log
 .dockerignore
 **/.next/
 **/fly.toml
-node_modules/
-!node_modules/@prisma/*
 .nx/
+node_modules/
+docker-compose.yml
+**/Dockerfile

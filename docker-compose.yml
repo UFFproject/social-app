@@ -1,32 +1,56 @@
 services:
-  main:
-    build: .
-    container_name: uff
-    tty: true
+  uff-database:
+    image: postgres:17.4-alpine
+    container_name: uff-database
+    platform: linux/x86_64
+    environment:
+      POSTGRES_USER: 'uff'
+      POSTGRES_DB: 'uffdb'
+      POSTGRES_HOST_AUTH_METHOD: 'trust'
+      PGDATA: '/data/postgres'
+    ports:
+      - '5432:5432'
+    restart: always
+    volumes:
+      - db:/data/postgres
+
+  uff-api:
+    build:
+      context: .
+      dockerfile: ./apps/api/Dockerfile
+    container_name: uff-api
+    env_file:
+      - .env.development
     ports:
       - '3000:3000'
-      - '4200:4200'
+      - '9229:9229'
+    depends_on:
+      - uff-database
+    restart: unless-stopped
     volumes:
-      - .:/src/app
+      - .:/app
+      - /app/node_modules
+      - pnpm-store:/pnpm/store
 
-  redis:
-    image: 'redis:alpine'
+  uff-web:
+    build:
+      context: .
+      dockerfile: apps/uff/Dockerfile
+    container_name: uff-web
     ports:
-      - '6379:6379'
-
-  postgres:
+      - '4000:4000'
     environment:
-      MYSQL_DATABASE: 'uff'
-      MYSQL_ALLOW_EMPTY_PASSWORD: true
-    expose:
-      - '3306'
-    image: postgres:17.1
-    platform: linux/x86_64 # sorry, my fellow arm user
-    restart: always
-    ports:
-      - '3306:3306'
+      - NODE_ENV=development
+    depends_on:
+      - uff-api
+      - uff-database
+    restart: unless-stopped
     volumes:
-      - uffdb:/var/lib/mysql
+      - ./apps/uff:/usr/src/app/apps/uff
+      - ./libs:/usr/src/app/libs
+      - /usr/src/app/node_modules
+      - /usr/src/app/apps/uff/node_modules
 
 volumes:
-  uffdb:
+  db:
+  pnpm-store:

@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 
+// FIXME: Change this file to SQL
 const prisma = new PrismaClient();
 
 async function main() {
