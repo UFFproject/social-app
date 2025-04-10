@@ -1,6 +1,11 @@
 import * as bcryptjs from 'bcryptjs';
 import { sign, verify } from 'hono/jwt';
 import { User } from '@prisma/client';
+import { JWTPayload } from 'hono/dist/types/utils/jwt/types';
+
+interface JwtAuthTokenPayload extends JWTPayload {
+  userId: string;
+}
 
 export async function verifyUserPassword(password : string, hashedPassword: string) {
   return bcryptjs.compare(password, hashedPassword);
@@ -30,5 +35,9 @@ export async function decodeAuthToken(token: string) {
   if (!secret)
     return false;
 
-  return verify(token, secret);
+  const payload = <JwtAuthTokenPayload>await verify(token, secret);
+  if (!payload.userId)
+    return false;
+
+  return payload;
 }
