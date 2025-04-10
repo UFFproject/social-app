@@ -22,6 +22,9 @@ const signupSchema = z.object({
 });
 
 auth.post('/login', zValidator('form', loginSchema, async (result, c: Context) => {
+  if (c.get('user'))
+    return c.json({success: false, error: 'Cannot use this function while logged in'}, 400);
+
   if (!result.success)
     return c.json({success: false, error: 'Invalid data'}, 400);
 
@@ -49,6 +52,9 @@ auth.post('/login', zValidator('form', loginSchema, async (result, c: Context) =
 }));
 
 auth.post('/signup', zValidator('form', signupSchema, async (result, c: Context) => {
+  if (c.get('user'))
+    return c.json({success: false, error: 'Cannot use this function while logged in'}, 400);
+
   if (!result.success)
     return c.json({success: false, error: 'Invalid data'}, 400);
 
@@ -75,6 +81,9 @@ auth.post('/signup', zValidator('form', signupSchema, async (result, c: Context)
 }));
 
 auth.get('/logout', async (c: Context) => {
+  if (!c.get('user'))
+    return c.json({success: false, error: 'Not logged in'}, 400);
+
   deleteCookie(c, 'token');
   return c.json({success: true})
 });
@@ -83,8 +92,8 @@ auth.get('/verify/:userId', async (c: Context) => {
   const userId = c.req.param('userId');
   const activated = await activateAccount(userId);
   if (!activated)
-    return c.json({success: false, error: 'Account could not be activated'});
+    return c.json({success: false, error: 'Account could not be activated'}, 400);
 
-  return c.json({success: true});
+  return c.json({success: true}, 200);
 });
 
