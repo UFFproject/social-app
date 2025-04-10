@@ -7,6 +7,18 @@ export type CreateUserPayload = {
   hashedPassword: string;
 };
 
+export type UpdateProfilePayload = {
+  name?: string;
+  surname?: string;
+  dateOfBirth?: Date;
+  gender?: string;
+  nationality?: string;
+  fieldOfStudy?: string;
+  yearOfStudy?: number;
+  languages?: string;
+  relationships?: string;
+}
+
 export async function fetchUserById(id: string) {
   return prisma.user.findUnique({where: {id}});
 }
@@ -38,4 +50,11 @@ export async function activateAccount(userId: string) {
   });
 
   return !!updateUser;
+}
+
+export async function updateProfile(userId: string, profileData: UpdateProfilePayload) {
+  return prisma.profile.update({
+    where: {userId},
+    data: {...profileData}
+  });
 }
