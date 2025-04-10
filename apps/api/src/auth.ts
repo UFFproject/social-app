@@ -2,9 +2,9 @@ import { Context } from 'hono';
 import { activateAccount, createUser, fetchUserByEmail } from '@/uff-db';
 import { createAuthToken, hashPassword, verifyUserPassword } from '@uff/auth';
 import { deleteCookie, setSignedCookie } from 'hono/cookie';
-import {z} from 'zod';
+import { z } from 'zod';
 import { zValidator } from '@hono/zod-validator'
-import {Hono} from 'hono';
+import { Hono } from 'hono';
 
 export const auth = new Hono();
 
@@ -59,7 +59,13 @@ auth.post('/signup', zValidator('form', signupSchema, async (result, c: Context)
     return c.json({success: false, error: 'User with this email already exists'}, 400);
 
   const hashedPassword = await hashPassword(password);
-  const account = await createUser(forename, surname, email, hashedPassword);
+  const account = await createUser({
+    forename,
+    surname,
+    email,
+    hashedPassword
+  });
+
   if (!account)
     return c.json({success: false, error: 'Account could not be created, try again later'}, 400);
 

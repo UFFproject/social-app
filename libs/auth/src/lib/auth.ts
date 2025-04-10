@@ -1,8 +1,6 @@
 import * as bcryptjs from 'bcryptjs';
 import { sign, verify } from 'hono/jwt';
-import {User} from '@prisma/client';
-
-
+import { User } from '@prisma/client';
 
 export async function verifyUserPassword(password : string, hashedPassword: string) {
   return bcryptjs.compare(password, hashedPassword);
