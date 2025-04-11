@@ -28,7 +28,6 @@ postRoutes.post('/post', zValidator('json', postSchema, async (result, c: Contex
     visibility,
     textContent,
     imagine,
-    createdAt: new Date().toISOString()
   });
 
   if (!newPost) {
