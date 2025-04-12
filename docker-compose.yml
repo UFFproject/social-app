@@ -20,9 +20,7 @@ services:
       retries: 5
 
   uff-api:
-    build:
-      context: .
-      dockerfile: ./apps/api/Dockerfile
+    image: uff-api
     container_name: uff-api
     env_file:
       - .env.development
@@ -32,6 +30,10 @@ services:
     depends_on:
       uff-database:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/test"]
+      interval: 10s
+      retries: 5
     restart: unless-stopped
     volumes:
       - .:/app
@@ -39,23 +41,20 @@ services:
       - pnpm-store:/pnpm/store
 
   uff-web:
-    build:
-      context: .
-      dockerfile: apps/uff/Dockerfile
+    image: uff-web
     container_name: uff-web
     ports:
       - '4000:4000'
     environment:
       - NODE_ENV=development
     depends_on:
-      - uff-api
-      - uff-database
+      uff-api:
+        condition: service_healthy
     restart: unless-stopped
     volumes:
-      - ./apps/uff:/usr/src/app/apps/uff
-      - ./libs:/usr/src/app/libs
-      - /usr/src/app/node_modules
-      - /usr/src/app/apps/uff/node_modules
+      - pnpm-store:/pnpm/store
+      - .:/app
+      - /app/node_modules
 
 volumes:
   db:
