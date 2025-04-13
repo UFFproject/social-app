@@ -99,9 +99,7 @@ auth.get('/verify/:userId', async (c: Context) => {
 
 auth.get('/me', async (c: Context) => {
   const user = c.get('user');
-  if (!user)
-    return c.json({success: false, error: 'Not logged in'}, 400);
 
-  const profile = await fetchUserProfile(user.id);
+  const profile = user ? await fetchUserProfile(user.id) : null;
   return c.json({success: true, profile}, 200);
 });
