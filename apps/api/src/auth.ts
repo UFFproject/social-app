@@ -1,5 +1,5 @@
 import { Context } from 'hono';
-import { activateAccount, createUser, fetchUserByEmail } from '@/uff-db';
+import { activateAccount, createUser, fetchUserByEmail, fetchUserProfile } from '@/uff-db';
 import { createAuthToken, hashPassword, verifyUserPassword } from '@uff/auth';
 import { deleteCookie, setSignedCookie } from 'hono/cookie';
 import { z } from 'zod';
@@ -48,7 +48,7 @@ auth.post('/login', zValidator('form', loginSchema, async (result, c: Context) =
   // FIXME change process.env.COOKIE_SECRET to something more reliable
   await setSignedCookie(c, 'token', token, process.env.COOKIE_SECRET as string);
 
-  return c.json({success: true, token: token});
+  return c.json({success: true, token: token}, 200);
 }));
 
 auth.post('/signup', zValidator('form', signupSchema, async (result, c: Context) => {
@@ -85,7 +85,7 @@ auth.get('/logout', async (c: Context) => {
     return c.json({success: false, error: 'Not logged in'}, 400);
 
   deleteCookie(c, 'token');
-  return c.json({success: true})
+  return c.json({success: true}, 200)
 });
 
 auth.get('/verify/:userId', async (c: Context) => {
@@ -97,3 +97,11 @@ auth.get('/verify/:userId', async (c: Context) => {
   return c.json({success: true}, 200);
 });
 
+auth.get('/me', async (c: Context) => {
+  const user = c.get('user');
+  if (!user)
+    return c.json({success: false, error: 'Not logged in'}, 400);
+
+  const profile = await fetchUserProfile(user.id);
+  return c.json({success: true, profile}, 200);
+});

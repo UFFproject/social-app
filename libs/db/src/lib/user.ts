@@ -39,3 +39,7 @@ export async function activateAccount(userId: string) {
 
   return !!updateUser;
 }
+
+export async function fetchUserProfile(userId: string) {
+  return await prisma.profile.findUnique({where: {userId: userId}});
+}
