@@ -7,7 +7,10 @@ interface JwtAuthTokenPayload extends JWTPayload {
   userId: string;
 }
 
-export async function verifyUserPassword(password : string, hashedPassword: string) {
+export async function verifyUserPassword(
+  password: string,
+  hashedPassword: string
+) {
   return bcryptjs.compare(password, hashedPassword);
 }
 
@@ -18,26 +21,25 @@ export async function hashPassword(password: string) {
 export async function createAuthToken(user: User) {
   const secret = process.env['JWT_ACCESS_SECRET'];
 
-  if (!secret)
-    return null;
+  if (!secret) return null;
 
-  if (!user || !user.id)
-    return null;
+  if (!user || !user.id) return null;
 
-  return sign({
-    userId: user.id
-  }, secret);
+  return sign(
+    {
+      userId: user.id,
+    },
+    secret
+  );
 }
 
 export async function decodeAuthToken(token: string) {
   const secret = process.env['JWT_ACCESS_SECRET'];
 
-  if (!secret)
-    return false;
+  if (!secret) return false;
 
   const payload = <JwtAuthTokenPayload>await verify(token, secret);
-  if (!payload.userId)
-    return false;
+  if (!payload.userId) return false;
 
   return payload;
 }

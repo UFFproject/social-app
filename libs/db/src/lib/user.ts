@@ -8,11 +8,11 @@ export type CreateUserPayload = {
 };
 
 export async function fetchUserById(id: string) {
-  return prisma.user.findUnique({where: {id}});
+  return prisma.user.findUnique({ where: { id } });
 }
 
 export async function fetchUserByEmail(email: string) {
-  return prisma.user.findUnique({where: {email}});
+  return prisma.user.findUnique({ where: { email } });
 }
 
 export async function createUser(data: CreateUserPayload) {
@@ -33,13 +33,13 @@ export async function createUser(data: CreateUserPayload) {
 
 export async function activateAccount(userId: string) {
   const updateUser = await prisma.user.update({
-    where: {id: userId, isActive: false},
-    data: {isActive: true}
+    where: { id: userId, isActive: false },
+    data: { isActive: true },
   });
 
   return !!updateUser;
 }
 
 export async function fetchUserProfile(userId: string) {
-  return await prisma.profile.findUnique({where: {userId: userId}});
+  return await prisma.profile.findUnique({ where: { userId: userId } });
 }
