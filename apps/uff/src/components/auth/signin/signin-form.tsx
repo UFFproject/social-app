@@ -1,6 +1,8 @@
 'use client';
 
-import { Button } from '@libs/ui/button';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from '@uff/ui/button';
+import { Checkbox } from '@uff/ui/checkbox';
 import {
   Form,
   FormControl,
@@ -8,35 +10,41 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@libs/ui/form';
-import { Input } from '@libs/ui/input';
-import { Checkbox } from '@libs/ui/checkbox';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { toast } from 'sonner';
+} from '@uff/ui/form';
+import { Input } from '@uff/ui/input';
 import Link from 'next/link';
-
-const schema = z.object({
-  email: z.string().min(1, 'Email is required').email(),
-  password: z.string().min(1, 'Password is required'),
-  remember: z.boolean().optional(),
-});
-
-type Values = z.infer<typeof schema>;
-
-function onSubmit(values: Values) {
-  toast.success('Submitted values\n' + JSON.stringify(values));
-}
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { useSignIn } from '../../../hooks/use-sign-in';
+import { SignInValues, signInSchema } from '../../../services/auth';
+import { useRouter } from 'next/navigation';
+import { Loader2Icon } from 'lucide-react';
 
 export default function SigninForm() {
-  const form = useForm<Values>({
-    resolver: zodResolver(schema),
+  const form = useForm<SignInValues>({
+    resolver: zodResolver(signInSchema),
     defaultValues: {
       email: '',
       password: '',
     },
   });
+
+  const router = useRouter();
+
+  const { mutate, isPending } = useSignIn();
+
+  function onSubmit(values: SignInValues) {
+    mutate(values, {
+      onSuccess() {
+        form.reset();
+        toast.success('Signed Up Successfully');
+        router.push('/dashboard');
+      },
+      onError(error) {
+        toast.error(error.message ?? 'Something went wrong.');
+      },
+    });
+  }
 
   return (
     <Form {...form}>
@@ -48,7 +56,7 @@ export default function SigninForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="john@example.com" {...field} />
+                <Input placeholder="john@example.com" type="email" {...field} />
               </FormControl>
 
               <FormMessage />
@@ -64,7 +72,7 @@ export default function SigninForm() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input placeholder="••••••" {...field} />
+                  <Input placeholder="••••••" type="password" {...field} />
                 </FormControl>
 
                 <FormMessage />
@@ -93,8 +101,12 @@ export default function SigninForm() {
             </Button>
           </div>
         </div>
-        <Button type="submit" className="w-full">
-          Sign In
+        <Button type="submit" className="w-full" disabled={isPending}>
+          {isPending ? (
+            <Loader2Icon className="size-4 animate-spin" />
+          ) : (
+            'Sign In'
+          )}
         </Button>
       </form>
     </Form>

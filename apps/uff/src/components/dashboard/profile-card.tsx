@@ -1,4 +1,4 @@
-import { Button } from '@libs/ui/button';
+import { Button } from '@uff/ui/button';
 import { UserIcon } from 'lucide-react';
 import Link from 'next/link';
 

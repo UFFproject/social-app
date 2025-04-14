@@ -1,7 +1,7 @@
-import DashboardActions from '@/components/dashboard/dashboard-actions';
-import DashboardSearch from '@/components/dashboard/dashboard-search';
-import PostPreviewCard from '@/components/dashboard/post-preview-card';
-import ProfileCard from '@/components/dashboard/profile-card';
+import DashboardActions from '../../../components/dashboard/dashboard-actions';
+import DashboardSearch from '../../../components/dashboard/dashboard-search';
+import PostPreviewCard from '../../../components/dashboard/post-preview-card';
+import ProfileCard from '../../../components/dashboard/profile-card';
 
 export default function Page() {
   return (

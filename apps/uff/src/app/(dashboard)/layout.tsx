@@ -1,5 +1,5 @@
-import Header from '@/components/dashboard/header';
-import Sidebar from '@/components/dashboard/sidebar';
+import Header from '../../components/dashboard/header';
+import Sidebar from '../../components/dashboard/sidebar';
 import { PropsWithChildren } from 'react';
 
 export default function DashboardLayout({ children }: PropsWithChildren) {

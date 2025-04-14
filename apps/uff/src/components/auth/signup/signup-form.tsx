@@ -1,6 +1,8 @@
 'use client';
 
-import { Button } from '@libs/ui/button';
+import { signUpSchema, SignUpValues } from '../../../services/auth';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from '@uff/ui/button';
 import {
   Form,
   FormControl,
@@ -8,36 +10,41 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@libs/ui/form';
-import { Input } from '@libs/ui/input';
+} from '@uff/ui/form';
+import { Input } from '@uff/ui/input';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
-
-const schema = z.object({
-  forename: z.string().min(1, 'Forename is required'),
-  surname: z.string().min(1, 'Surname is required'),
-  email: z.string().min(1, 'Email is required').email(),
-  password: z.string().min(1, 'Password is required'),
-});
-
-type Values = z.infer<typeof schema>;
-
-function onSubmit(values: Values) {
-  toast.success('Submitted values\n' + JSON.stringify(values));
-}
+import { useSignUp } from '../../../hooks/use-sign-up';
+import { Loader2Icon } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export default function SignupForm() {
-  const form = useForm<Values>({
-    resolver: zodResolver(schema),
+  const form = useForm<SignUpValues>({
+    resolver: zodResolver(signUpSchema),
     defaultValues: {
       forename: '',
       surname: '',
       email: '',
       password: '',
+      confirmPassword: '',
     },
   });
+  const router = useRouter();
+
+  const { mutate, isPending } = useSignUp();
+
+  function onSubmit(values: SignUpValues) {
+    mutate(values, {
+      onSuccess() {
+        form.reset();
+        toast.success('Signed Up Successfully');
+        router.push('/signin');
+      },
+      onError(error) {
+        toast.error(error.message ?? 'Something went wrong.');
+      },
+    });
+  }
 
   return (
     <Form {...form}>
@@ -47,7 +54,7 @@ export default function SignupForm() {
             control={form.control}
             name="forename"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="flex-1">
                 <FormLabel>Forename</FormLabel>
                 <FormControl>
                   <Input placeholder="John" {...field} />
@@ -61,7 +68,7 @@ export default function SignupForm() {
             control={form.control}
             name="surname"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="flex-1">
                 <FormLabel>Surname</FormLabel>
                 <FormControl>
                   <Input placeholder="Doe" {...field} />
@@ -79,7 +86,7 @@ export default function SignupForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="john@example.com" {...field} />
+                <Input placeholder="john@example.com" type="email" {...field} />
               </FormControl>
 
               <FormMessage />
@@ -93,15 +100,35 @@ export default function SignupForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="••••••" {...field} />
+                <Input placeholder="••••••" type="password" {...field} />
               </FormControl>
 
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">
-          Sign Up
+
+        <FormField
+          control={form.control}
+          name="confirmPassword"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <Input placeholder="••••••" type="password" {...field} />
+              </FormControl>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <Button type="submit" className="w-full" disabled={isPending}>
+          {isPending ? (
+            <Loader2Icon className="size-4 animate-spin" />
+          ) : (
+            'Sign Up'
+          )}
         </Button>
       </form>
     </Form>

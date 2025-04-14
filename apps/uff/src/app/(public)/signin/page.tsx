@@ -1,5 +1,5 @@
-import SigninFooter from '@/components/signin-footer';
-import SigninForm from '@/components/signin-form';
+import SigninFooter from '../../../components/auth/signin/signin-footer';
+import SigninForm from '../../../components/auth/signin/signin-form';
 
 export default function SignInPage() {
   return (

@@ -1,4 +1,4 @@
-import AuthBanner from '@/components/auth-banner';
+import AuthBanner from '../../components/auth/auth-banner';
 import React, { PropsWithChildren } from 'react';
 
 export default function Layout({ children }: PropsWithChildren) {

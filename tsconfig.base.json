@@ -19,9 +19,13 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "@/uff-db": ["libs/db/src/index.ts"],
-      "@/uff-prisma": ["libs/prisma/src/index.ts"],
-      "@uff/auth": ["libs/auth/src/index.ts"]
+      "@uff/db": ["libs/db/src/index.ts"],
+      "@uff/prisma": ["libs/prisma/src/index.ts"],
+      "@uff/auth": ["libs/auth/src/index.ts"],
+      "@uff/rpc": ["libs/rpc/src/index.ts"],
+      "@uff/rpc/*": ["libs/rpc/src/*"],
+      "@uff/ui": ["libs/ui/src/index.ts"],
+      "@uff/ui/*": ["libs/ui/src/*"]
     }
   },
   "exclude": ["node_modules"]

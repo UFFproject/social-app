@@ -1,4 +1,4 @@
-import { Button } from '@libs/ui/button';
+import { Button } from '@uff/ui/button';
 import {
   HomeIcon,
   LayoutIcon,
