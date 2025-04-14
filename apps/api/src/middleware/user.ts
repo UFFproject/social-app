@@ -1,5 +1,5 @@
 import { Context, Next } from 'hono';
-import { getSignedCookie } from 'hono/dist/types/helper/cookie';
+import { getSignedCookie } from 'hono/cookie';
 import { decodeAuthToken } from '@uff/auth';
 import { fetchUserById } from '@/uff-db';
 
