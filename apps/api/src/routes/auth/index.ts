@@ -1,30 +1,16 @@
-import { Context } from 'hono';
 import {
   activateAccount,
   createUser,
   fetchUserByEmail,
   fetchUserProfile,
 } from '@/uff-db';
-import { createAuthToken, hashPassword, verifyUserPassword } from '@uff/auth';
-import { deleteCookie, setSignedCookie } from 'hono/cookie';
-import { z } from 'zod';
 import { zValidator } from '@hono/zod-validator';
-import { Hono } from 'hono';
+import { createAuthToken, hashPassword, verifyUserPassword } from '@uff/auth';
+import { Context, Hono } from 'hono';
+import { deleteCookie, setSignedCookie } from 'hono/cookie';
+import { loginSchema, signupSchema } from './schema';
 
 export const auth = new Hono();
-
-// POST actions schema
-const loginSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(1),
-});
-
-const signupSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(6),
-  forename: z.string().min(1),
-  surname: z.string().min(2),
-});
 
 auth.post(
   '/login',
@@ -71,7 +57,6 @@ auth.post(
         400
       );
 
-    // FIXME change process.env.COOKIE_SECRET to something more reliable
     await setSignedCookie(
       c,
       'token',

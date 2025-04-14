@@ -19,7 +19,7 @@ export async function hashPassword(password: string) {
 }
 
 export async function createAuthToken(user: User) {
-  const secret = process.env['JWT_ACCESS_SECRET'];
+  const secret = process.env.JWT_ACCESS_SECRET;
 
   if (!secret) return null;
 
@@ -34,7 +34,7 @@ export async function createAuthToken(user: User) {
 }
 
 export async function decodeAuthToken(token: string) {
-  const secret = process.env['JWT_ACCESS_SECRET'];
+  const secret = process.env.JWT_ACCESS_SECRET;
 
   if (!secret) return false;
 
