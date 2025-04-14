@@ -1,8 +1,7 @@
 services:
-  uff-database:
+  database:
     image: postgres:17.4-alpine
     container_name: uff-database
-    platform: linux/x86_64
     environment:
       POSTGRES_USER: 'uff'
       POSTGRES_DB: 'uffdb'
@@ -19,42 +18,23 @@ services:
       timeout: 5s
       retries: 5
 
-  uff-api:
-    image: uff-api
-    container_name: uff-api
+  main:
+    build: .
+    tty: true
+    container_name: uff-main
     env_file:
       - .env.development
     ports:
       - '3000:3000'
       - '9229:9229'
-    depends_on:
-      uff-database:
-        condition: service_healthy
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/test"]
-      interval: 10s
-      retries: 5
-    restart: unless-stopped
-    volumes:
-      - .:/app
-      - /app/node_modules
-      - pnpm-store:/pnpm/store
-
-  uff-web:
-    image: uff-web
-    container_name: uff-web
-    ports:
       - '4000:4000'
-    environment:
-      - NODE_ENV=development
     depends_on:
-      uff-api:
+      database:
         condition: service_healthy
-    restart: unless-stopped
     volumes:
-      - pnpm-store:/pnpm/store
       - .:/app
       - /app/node_modules
+      - pnpm-store:/pnpm/store
 
 volumes:
   db:
