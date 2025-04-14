@@ -5,4 +5,5 @@ ALTER COLUMN "languages" DROP DEFAULT;
 
 -- AlterTable
 ALTER TABLE "users" ALTER COLUMN "password" DROP DEFAULT,
+ALTER COLUMN "address" DROP NOT NULL,
 ALTER COLUMN "address" DROP DEFAULT;
