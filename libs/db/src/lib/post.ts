@@ -1,7 +1,7 @@
 import { prisma } from './client';
 
 type CreatePostInput = {
-  authorId: number;
+  authorId: string;
   communityId: string;
   visibility: 'PUBLIC' | 'PRIVATE' | 'COMMUNITY_ONLY';
   textContent?: string;

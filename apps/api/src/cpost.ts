@@ -7,7 +7,7 @@ export const postRoutes = new Hono();
 
 // Zod schema for post creation
 const postSchema = z.object({
-  authorId: z.coerce.number().int(), // coerces string "1" → number 1
+  authorId: z.string(),
   communityId: z.string().min(1),
   visibility: z.enum(['PUBLIC', 'PRIVATE', 'COMMUNITY_ONLY']),
   textContent: z.string().max(5000).optional(),
