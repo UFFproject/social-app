@@ -1,8 +1,0 @@
-FROM uff-base AS web
-
-ENV NODE_ENV=development
-ENV PORT=4000
-
-EXPOSE 4000
-
-CMD ["pnpm", "nx", "dev", "web"]
