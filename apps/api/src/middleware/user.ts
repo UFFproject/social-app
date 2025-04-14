@@ -1,7 +1,7 @@
 import { Context, Next } from 'hono';
 import { getSignedCookie } from 'hono/cookie';
 import { decodeAuthToken } from '@uff/auth';
-import { fetchUserById } from '@/uff-db';
+import { fetchUserById } from '@uff/db';
 
 export async function loggedUserMiddleware(c: Context, next: Next) {
   const token = await getSignedCookie(

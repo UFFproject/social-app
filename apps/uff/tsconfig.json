@@ -16,24 +16,16 @@
         "name": "next"
       }
     ],
-    "types": ["jest", "node"],
-    "strict": false,
-    "isolatedModules": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"],
-      "@libs/ui": ["../../libs/ui/src/index.ts"],
-      "@libs/ui/*": ["../../libs/ui/src/*"]
-    }
+    "isolatedModules": true
   },
   "include": [
     "../../apps/uff/.next/types/**/*.ts",
     "../../dist/apps/uff/.next/types/**/*.ts",
     "next-env.d.ts",
-    "src/**/*.js",
-    "src/**/*.jsx",
-    "src/**/*.ts",
-    "src/**/*.tsx",
+    "**/*.js",
+    "**/*.jsx",
+    "**/*.ts",
+    "**/*.tsx",
     ".next/types/**/*.ts"
   ],
   "exclude": [

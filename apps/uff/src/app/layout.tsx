@@ -1,4 +1,5 @@
-import { Toaster } from '@libs/ui/sonner';
+import Providers from '../components/providers';
+import { Toaster } from '@uff/ui/sonner';
 import './global.css';
 
 export const metadata = {
@@ -13,10 +14,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
-        {children}
-        <Toaster richColors />
-      </body>
+      <Providers>
+        <body>
+          {children}
+          <Toaster richColors />
+        </body>
+      </Providers>
     </html>
   );
 }
