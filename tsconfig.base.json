@@ -19,8 +19,11 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
+      "@/uff-api-client": ["libs/api/client/src/index.ts"],
+      "@/uff-api-routers": ["libs/api/routers/src/index.ts"],
       "@/uff-db": ["libs/db/src/index.ts"],
       "@/uff-prisma": ["libs/prisma/src/index.ts"],
+      "@/uff-ui": ["libs/ui/src/index.ts"],
     }
   },
   "exclude": ["node_modules"]
