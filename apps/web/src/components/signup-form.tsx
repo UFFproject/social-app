@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@libs/ui/button';
+import { Button } from '@/uff-ui';
 import {
   Form,
   FormControl,
@@ -8,8 +8,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@libs/ui/form';
-import { Input } from '@libs/ui/input';
+} from '@/uff-ui';
+import { Input } from '@/uff-ui';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
