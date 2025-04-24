@@ -1,16 +1,14 @@
 import { serve } from '@hono/node-server';
 import { Hono } from 'hono';
-import { loggedUserMiddleware } from './middleware/user';
-import { router } from '@uff/rpc';
+import { router } from '@uff/rpc/server';
 import { cors } from 'hono/cors';
 
 const app = new Hono();
 
-app.use(loggedUserMiddleware);
-
 app.use(
   cors({
     origin: 'http://localhost:4000',
+    credentials: true,
   })
 );
 

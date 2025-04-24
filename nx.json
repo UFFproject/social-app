@@ -31,7 +31,21 @@
           "watchDepsName": "watch-deps"
         }
       },
-      "exclude": ["libs/db/*", "libs/auth/*", "libs/rpc/*"]
+      "exclude": []
+    },
+    {
+      "plugin": "@nx/js/typescript",
+      "include": [
+        "libs/db/*",
+        "libs/auth/*",
+        "libs/rpc/*",
+        "libs/validators/*"
+      ],
+      "options": {
+        "typecheck": {
+          "targetName": "typecheck"
+        }
+      }
     },
     {
       "plugin": "@nx/next/plugin",
@@ -65,15 +79,6 @@
         "targetName": "test"
       },
       "exclude": ["api-e2e/**/*", "apps/api-e2e/**/*"]
-    },
-    {
-      "plugin": "@nx/js/typescript",
-      "include": ["libs/db/*", "libs/auth/*", "libs/rpc/*"],
-      "options": {
-        "typecheck": {
-          "targetName": "typecheck"
-        }
-      }
     }
   ],
   "targetDefaults": {
