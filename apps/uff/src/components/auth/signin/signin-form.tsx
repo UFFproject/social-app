@@ -16,9 +16,9 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { useSignIn } from '../../../hooks/use-sign-in';
-import { SignInValues, signInSchema } from '../../../services/auth';
 import { useRouter } from 'next/navigation';
 import { Loader2Icon } from 'lucide-react';
+import { signInSchema, SignInValues } from '@uff/validators';
 
 export default function SigninForm() {
   const form = useForm<SignInValues>({
@@ -26,6 +26,7 @@ export default function SigninForm() {
     defaultValues: {
       email: '',
       password: '',
+      remember: false,
     },
   });
 

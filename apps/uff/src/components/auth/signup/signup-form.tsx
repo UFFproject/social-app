@@ -1,6 +1,5 @@
 'use client';
 
-import { signUpSchema, SignUpValues } from '../../../services/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@uff/ui/button';
 import {
@@ -17,6 +16,7 @@ import { toast } from 'sonner';
 import { useSignUp } from '../../../hooks/use-sign-up';
 import { Loader2Icon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { signUpSchema, SignUpValues } from '@uff/validators';
 
 export default function SignupForm() {
   const form = useForm<SignUpValues>({

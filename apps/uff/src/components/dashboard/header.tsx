@@ -1,4 +1,5 @@
 import { SearchIcon, UserIcon } from 'lucide-react';
+import Link from 'next/link';
 
 export default function Header() {
   return (
@@ -13,11 +14,13 @@ export default function Header() {
 
 function Logo() {
   return (
-    <div className="h-10 bg-white px-2 border-2 border-primary  flex items-center justify-center w-[225px]">
-      <span className="text-primary font-medium text-lg">
-        University Friends Finder
-      </span>
-    </div>
+    <Link href="/dashboard">
+      <div className="h-10 bg-white px-2 border-2 border-primary  flex items-center justify-center w-[225px]">
+        <span className="text-primary font-medium text-lg">
+          University Friends Finder
+        </span>
+      </div>
+    </Link>
   );
 }
 

@@ -1,5 +1,9 @@
-import React from 'react';
+import ProfileEditForm from '../../../components/profile/profile-edit-form';
 
 export default function EditPage() {
-  return <div>EditPage</div>;
+  return (
+    <div className="max-w-lg">
+      <ProfileEditForm />
+    </div>
+  );
 }
