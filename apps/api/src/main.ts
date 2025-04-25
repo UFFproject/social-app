@@ -1,6 +1,7 @@
 import { serve } from '@hono/node-server';
 import { Hono } from 'hono';
 import { auth } from './routes/auth';
+import { profile } from './routes/profile';
 import { loggedUserMiddleware } from './middleware/user';
 
 const app = new Hono();
