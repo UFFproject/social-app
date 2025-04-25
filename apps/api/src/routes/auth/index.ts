@@ -138,3 +138,23 @@ auth.get('/me', async (c: Context) => {
   const profile = user ? await fetchUserProfile(user.id) : null;
   return c.json({ success: true, profile }, 200);
 });
+
+auth.get('/refresh', async (c: Context) => {
+  const user = c.get('user');
+  if (!user)
+    return c.json(
+      { success: false, error: 'Token expired or user not logged in' },
+      400
+    );
+
+  const token = await createAuthToken(user.id);
+  if (!token)
+    return c.json(
+      { success: false, error: 'Token could not be refreshed' },
+      400
+    );
+
+  await setSignedCookie(c, 'token', token, process.env.COOKIE_SECRET as string);
+
+  return c.json({ success: true, token: token });
+});

@@ -28,6 +28,7 @@ export async function createAuthToken(user: User) {
   return sign(
     {
       userId: user.id,
+      exp: Math.floor(Date.now() / 1000) + 60 * 60, // Token expires in 60 minutes
     },
     secret
   );
