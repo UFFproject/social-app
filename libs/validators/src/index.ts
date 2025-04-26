@@ -65,6 +65,8 @@ export type SignUpValues = z.infer<typeof signUpSchema>;
 
 export const editProfileSchema = z
   .object({
+    name: z.string(),
+    surname: z.string(),
     dateOfBirth: z.coerce.date(),
     gender: z.string(),
     nationality: z.string(),
@@ -76,3 +78,9 @@ export const editProfileSchema = z
   .partial();
 
 export type EditProfileValues = z.infer<typeof editProfileSchema>;
+
+export const createPostSchema = z.object({
+  textContent: z.string().min(5).max(999),
+});
+
+export type CreatePostValues = z.infer<typeof createPostSchema>;
