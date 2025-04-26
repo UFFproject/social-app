@@ -162,14 +162,14 @@ enum PostVisibility {
 model Post {
   id          String         @id @default(uuid(7)) @db.Uuid
   authorId    String         @db.Uuid
-  textContent String?        @db.VarChar(5000)
+  textContent String         @db.VarChar(5000)
   imagine     String?        @db.VarChar(1000)
-  communityId String         @db.Uuid
+  communityId String?        @db.Uuid
   createdAt   DateTime       @default(now())
   visibility  PostVisibility
 
-  author    User      @relation(fields: [authorId], references: [id])
-  community Community @relation(fields: [communityId], references: [id])
+  author    User       @relation(fields: [authorId], references: [id])
+  community Community? @relation(fields: [communityId], references: [id])
 
   @@map("posts")
 }
