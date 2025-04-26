@@ -13,7 +13,7 @@ import { deleteCookie, setSignedCookie } from 'hono/cookie';
 export const authRouter = new Hono()
   .post(
     '/login',
-    zValidator('form', signInSchema, async (result, c) => {
+    zValidator('json', signInSchema, async (result, c) => {
       if (c.get('user')) {
         return c.json({ error: 'Bad request' }, 400);
       }
@@ -68,12 +68,12 @@ export const authRouter = new Hono()
       return c.json({ success: true, token: token }, 200);
     })
   )
-  .post('/signup', zValidator('form', signUpSchema), async (c) => {
+  .post('/signup', zValidator('json', signUpSchema), async (c) => {
     if (c.get('user')) {
       return c.json({ error: 'Bad request' }, 400);
     }
 
-    const { forename, surname, email, password } = c.req.valid('form');
+    const { forename, surname, email, password } = c.req.valid('json');
 
     const existingUser = await fetchUserByEmail(email);
 
@@ -92,7 +92,7 @@ export const authRouter = new Hono()
 
     return c.json(user, 200);
   })
-  .get('/logout', async (c) => {
+  .post('/logout', async (c) => {
     if (!c.get('user')) {
       return c.json({ error: 'Bad request' }, 400);
     }
