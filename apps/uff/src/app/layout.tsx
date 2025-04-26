@@ -1,5 +1,4 @@
 import Providers from '../components/providers';
-import { Toaster } from '@uff/ui/sonner';
 import './global.css';
 
 export const metadata = {
@@ -13,13 +12,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <Providers>
-        <body>
-          {children}
-          <Toaster richColors />
-        </body>
-      </Providers>
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }

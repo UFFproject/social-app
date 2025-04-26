@@ -12,9 +12,9 @@ export async function getProfile() {
   return data;
 }
 
-export async function editProfile(form: EditProfileValues) {
+export async function editProfile(values: EditProfileValues) {
   const res = await client.profile.update.$put({
-    json: form,
+    json: values,
   });
 
   if (!res.ok) {

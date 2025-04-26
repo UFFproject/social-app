@@ -1,9 +1,9 @@
 import { client } from '@uff/rpc/client';
 import { SignInValues, SignUpValues } from '@uff/validators';
 
-export async function signUp(form: SignUpValues) {
+export async function signUp(values: SignUpValues) {
   const res = await client.auth.signup.$post({
-    form,
+    json: values,
   });
 
   if (!res.ok) {
@@ -14,9 +14,9 @@ export async function signUp(form: SignUpValues) {
   return await res.json();
 }
 
-export async function signIn(form: SignInValues) {
+export async function signIn(values: SignInValues) {
   const res = await client.auth.login.$post({
-    form,
+    json: values,
   });
 
   if (!res.ok) {
@@ -30,4 +30,8 @@ export async function signIn(form: SignInValues) {
 export async function getSession() {
   const res = await client.auth.me.$get();
   return await res.json();
+}
+
+export async function signOut() {
+  await client.auth.logout.$post();
 }

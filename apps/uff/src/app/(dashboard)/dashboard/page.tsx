@@ -1,30 +1,11 @@
-import DashboardActions from '../../../components/dashboard/dashboard-actions';
-import DashboardSearch from '../../../components/dashboard/dashboard-search';
-import PostPreviewCard from '../../../components/dashboard/post-preview-card';
-import ProfileCard from '../../../components/dashboard/profile-card';
+import Feed from '../../../components/dashboard/feed';
+import CreatePost from '../../../components/dashboard/create-post';
 
 export default function Page() {
   return (
-    <>
-      <ProfileCard
-        name="Name"
-        surname="Surname"
-        profile={{
-          dob: '09.08.2024 (20 years old)',
-          fos: 'Informatics',
-          languages: 'Polish, Ukrainian, English',
-          nationality: 'Ukrainian 🇺🇦',
-          sex: 'Male',
-          university: 'KUL',
-        }}
-      />
-      <DashboardSearch />
-      <DashboardActions />
-      <PostPreviewCard
-        name="Name"
-        surname="Surname"
-        createdAt="25.03.2025 17:30"
-      />
-    </>
+    <div className="max-w-lg mx-auto space-y-4">
+      <CreatePost />
+      <Feed />
+    </div>
   );
 }

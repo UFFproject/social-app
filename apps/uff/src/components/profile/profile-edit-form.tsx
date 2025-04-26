@@ -20,6 +20,8 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { useEditProfile } from '../../hooks/use-edit-profile';
 import { useProfile } from '../../hooks/use-profile';
+import { CountryDropdown } from '@uff/ui/country-dropdown';
+import { GenderSelect } from '@uff/ui/gender-select';
 
 export default function ProfileEditForm() {
   const { data } = useProfile();
@@ -27,6 +29,8 @@ export default function ProfileEditForm() {
   const form = useForm<EditProfileValues>({
     resolver: zodResolver(editProfileSchema),
     defaultValues: {
+      name: data.name ?? '',
+      surname: data.surname ?? '',
       fieldOfStudy: data.fieldOfStudy ?? '',
       gender: data.gender ?? '',
       languages: data.languages ?? '',
@@ -43,6 +47,7 @@ export default function ProfileEditForm() {
   function onSubmit(values: EditProfileValues) {
     mutate(values, {
       onSuccess(data) {
+        toast.success('Saved profile');
         queryClient.setQueryData(['profile'], data);
       },
       onError(error) {
@@ -57,12 +62,42 @@ export default function ProfileEditForm() {
         <div className="flex gap-4">
           <FormField
             control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem className="flex-1">
+                <FormLabel>Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="John" {...field} />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="surname"
+            render={({ field }) => (
+              <FormItem className="flex-1">
+                <FormLabel>Surname</FormLabel>
+                <FormControl>
+                  <Input placeholder="Doe" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <div className="flex gap-4">
+          <FormField
+            control={form.control}
             name="gender"
             render={({ field }) => (
               <FormItem className="flex-1">
                 <FormLabel>Gender</FormLabel>
                 <FormControl>
-                  <Input placeholder="Male" {...field} />
+                  <GenderSelect value={field.value} onChange={field.onChange} />
                 </FormControl>
 
                 <FormMessage />
@@ -94,13 +129,67 @@ export default function ProfileEditForm() {
             <FormItem className="flex flex-col">
               <FormLabel>Nationality</FormLabel>
               <FormControl>
-                <Input placeholder="Poland" {...field} />
+                <CountryDropdown
+                  defaultValue={field.value}
+                  onChange={(c) => field.onChange(c.alpha3)}
+                />
               </FormControl>
 
               <FormMessage />
             </FormItem>
           )}
         />
+
+        <FormField
+          control={form.control}
+          name="languages"
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
+              <FormLabel>Languages</FormLabel>
+              <FormControl>
+                <Input placeholder="Polish" type="text" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <div className="flex gap-4">
+          <FormField
+            control={form.control}
+            name="fieldOfStudy"
+            render={({ field }) => (
+              <FormItem className="flex-[3]">
+                <FormLabel>Field of study</FormLabel>
+                <FormControl>
+                  <Input placeholder="Computer Science" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="yearOfStudy"
+            render={({ field }) => (
+              <FormItem className="flex-1">
+                <FormLabel>Year of study</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="1"
+                    type="number"
+                    min={0}
+                    max={6}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
         <FormField
           control={form.control}
           name="relationship"
@@ -115,37 +204,16 @@ export default function ProfileEditForm() {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="fieldOfStudy"
-          render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel>Field of study</FormLabel>
-              <FormControl>
-                <Input placeholder="Computer Science" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
 
-        {/* <FormField
-          control={form.control}
-          name="yearOfStudy"
-          render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel>Year of study</FormLabel>
-              <FormControl>
-                <Input placeholder="1" type="number" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        /> */}
-
-        <Button type="submit" className="w-full" disabled={isPending}>
-          {isPending ? <Loader2Icon className="size-4 animate-spin" /> : 'Save'}
-        </Button>
+        <div className="flex justify-end">
+          <Button type="submit" disabled={isPending}>
+            {isPending ? (
+              <Loader2Icon className="size-4 animate-spin" />
+            ) : (
+              'Save'
+            )}
+          </Button>
+        </div>
       </form>
     </Form>
   );

@@ -1,16 +1,16 @@
-import Header from '../../components/dashboard/header';
-import Sidebar from '../../components/dashboard/sidebar';
+import { SidebarInset, SidebarProvider } from '@uff/ui/sidebar';
 import { PropsWithChildren } from 'react';
+import Header from '../../components/dashboard/header';
+import AppSidebar from '../../components/dashboard/app-sidebar';
 
 export default function DashboardLayout({ children }: PropsWithChildren) {
   return (
-    <>
-      <Header />
-      <div className="max-w-screen-xl mx-auto flex gap-12 py-6">
-        <Sidebar />
-
-        <div className="flex-1 space-y-4">{children}</div>
-      </div>
-    </>
+    <SidebarProvider>
+      <AppSidebar />
+      <SidebarInset>
+        <Header />
+        <div className="flex-1 p-4">{children}</div>
+      </SidebarInset>
+    </SidebarProvider>
   );
 }
