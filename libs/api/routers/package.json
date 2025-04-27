@@ -1,0 +1,11 @@
+{
+  "name": "@uff/api-router",
+  "version": "0.0.1",
+  "private": true,
+  "type": "commonjs",
+  "main": "./index.cjs",
+  "types": "./index.d.ts",
+  "dependencies": {
+    "hono": "^4.7.4"
+  }
+}
