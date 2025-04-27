@@ -1,5 +1,4 @@
-import SigninFooter from '../../../components/auth/signin/signin-footer';
-import SigninForm from '../../../components/auth/signin/signin-form';
+import { SigninFooter, SigninForm } from '@/uff-web-sign-in';
 
 export default function SignInPage() {
   return (

@@ -21,10 +21,16 @@
     "paths": {
       "@/uff-api-client": ["libs/api/client/src/index.ts"],
       "@/uff-api-routers": ["libs/api/routers/src/index.ts"],
+      "@/uff-auth": ["libs/auth/src/index.ts"],
       "@/uff-db": ["libs/db/src/index.ts"],
       "@/uff-prisma": ["libs/prisma/src/index.ts"],
-      "@uff/auth": ["libs/auth/src/index.ts"],
-      "@/uff-ui": ["libs/ui/src/index.ts"]
+      "@/uff-ui": ["libs/ui/src/index.ts"],
+      "@/uff-validators": ["libs/validators/src/index.ts"],
+      "@/uff-web-dashboard": ["libs/web/feat/dashboard/src/index.ts"],
+      "@/uff-web-settings": ["libs/web/feat/settings/src/index.ts"],
+      "@/uff-web-shared": ["libs/web/shared/src/index.ts"],
+      "@/uff-web-sign-in": ["libs/web/feat/sign-in/src/index.ts"],
+      "@/uff-web-sign-up": ["libs/web/feat/sign-up/src/index.ts"]
     }
   },
   "exclude": ["node_modules"]
