@@ -1,5 +1,4 @@
-import { Prisma } from '@prisma/client';
-import { prisma } from './client';
+import { prisma } from '../client';
 
 export type CreateUserPayload = {
   forename: string;
@@ -39,28 +38,4 @@ export async function activateAccount(userId: string) {
   });
 
   return !!updateUser;
-}
-
-export async function fetchUserProfile(userId: string) {
-  return await prisma.profile.findUnique({ where: { userId: userId } });
-}
-
-export async function updateProfile(
-  userId: string,
-  data: Prisma.ProfileUpdateInput
-) {
-  return await prisma.profile.update({
-    data,
-    where: {
-      userId,
-    },
-  });
-}
-
-export async function getProfile(userId: string) {
-  return await prisma.profile.findFirst({
-    where: {
-      userId,
-    },
-  });
 }

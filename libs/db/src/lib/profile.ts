@@ -1,23 +1,22 @@
-import { prisma } from './client';
-
-export type UpdateProfilePayload = {
-  name?: string;
-  surname?: string;
-  dateOfBirth?: Date;
-  gender?: string;
-  nationality?: string;
-  fieldOfStudy?: string;
-  yearOfStudy?: number;
-  languages?: string;
-  relationships?: string;
-};
+import { Prisma } from '@prisma/client';
+import { prisma } from '../client';
 
 export async function updateProfile(
   userId: string,
-  profileData: UpdateProfilePayload
+  data: Prisma.ProfileUpdateInput
 ) {
-  return prisma.profile.update({
-    where: { userId },
-    data: { ...profileData },
+  return await prisma.profile.update({
+    data,
+    where: {
+      userId,
+    },
+  });
+}
+
+export async function getProfile(userId: string) {
+  return await prisma.profile.findFirst({
+    where: {
+      userId,
+    },
   });
 }

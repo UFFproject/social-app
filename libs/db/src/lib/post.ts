@@ -1,12 +1,17 @@
 import { PostVisibility } from '@prisma/client';
-import { prisma } from './client';
+import { prisma } from '../client';
 
 export const getPosts = async () => {
   return await prisma.post.findMany({
     include: {
       author: {
-        include: {
-          profile: true,
+        select: {
+          profile: {
+            select: {
+              name: true,
+              surname: true,
+            },
+          },
         },
       },
     },
@@ -27,8 +32,13 @@ export const createPost = async (data: CreatePostInput) => {
     data,
     include: {
       author: {
-        include: {
-          profile: true,
+        select: {
+          profile: {
+            select: {
+              name: true,
+              surname: true,
+            },
+          },
         },
       },
     },
