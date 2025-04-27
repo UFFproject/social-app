@@ -1,9 +1,12 @@
 'use client';
 
+<<<<<<<< HEAD:apps/uff/src/components/auth/signin/signin-form.tsx
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@uff/ui/button';
 import { Checkbox } from '@uff/ui/checkbox';
+========
 import { Button } from '@/uff-ui';
+>>>>>>>> origin/master:apps/web/src/components/signin-form.tsx
 import {
   Form,
   FormControl,
@@ -11,14 +14,18 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+<<<<<<<< HEAD:apps/uff/src/components/auth/signin/signin-form.tsx
 } from '@uff/ui/form';
 import { Input } from '@uff/ui/input';
+========
+} from '@/uff-ui';
 import { Input } from '@/uff-ui';
 import { Checkbox } from '@/uff-ui';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
+>>>>>>>> origin/master:apps/web/src/components/signin-form.tsx
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';

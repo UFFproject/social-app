@@ -240,6 +240,9 @@ importers:
       jest-environment-node:
         specifier: ^29.7.0
         version: 29.7.0
+      jsonc-eslint-parser:
+        specifier: ^2.1.0
+        version: 2.4.0
       nx:
         specifier: 20.6.0
         version: 20.6.0(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.19)(typescript@5.7.3))(@swc/core@1.5.29(@swc/helpers@0.5.15))
@@ -268,6 +271,7 @@ importers:
         specifier: ^8.19.0
         version: 8.26.1(eslint@9.22.0(jiti@1.21.7))(typescript@5.7.3)
 
+<<<<<<< HEAD
   apps/uff:
     dependencies:
       next:
@@ -282,6 +286,8 @@ importers:
 
   apps/uff-e2e: {}
 
+=======
+>>>>>>> c218465 ((api) Added router library and minor config changes)
 packages:
 
   '@adobe/css-tools@4.3.3':

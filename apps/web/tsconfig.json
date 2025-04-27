@@ -2,25 +2,31 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "jsx": "preserve",
-    "noEmit": true,
-    "emitDeclarationOnly": false,
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
+    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "strict": true,
     "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
     "incremental": true,
+    "types": ["jest", "node"],
+    "target": "es2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "checkJs": true,
+    "skipLibCheck": true,
+    "module": "esnext",
+    "moduleResolution": "node",
     "plugins": [
       {
         "name": "next"
       }
-    ],
-    "isolatedModules": true
+    ]
   },
   "include": [
-    "../../apps/uff/.next/types/**/*.ts",
-    "../../dist/apps/uff/.next/types/**/*.ts",
+    "../../apps/web/.next/types/**/*.ts",
+    "../../dist/apps/web/.next/types/**/*.ts",
     "next-env.d.ts",
     "**/*.js",
     "**/*.jsx",

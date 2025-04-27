@@ -1,4 +1,8 @@
+<<<<<<< HEAD:apps/uff/src/app/layout.tsx
 import Providers from '../components/providers';
+=======
+import { Toaster } from '@/uff-ui';
+>>>>>>> origin/master:apps/web/src/app/layout.tsx
 import './global.css';
 
 export const metadata = {

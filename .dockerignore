@@ -12,5 +12,4 @@ npm-debug.log
 **/fly.toml
 .nx/
 node_modules/
-docker-compose.yml
-**/Dockerfile
+Dockerfile
