@@ -1,8 +1,17 @@
 import { serve } from '@hono/node-server';
 import { Hono } from 'hono';
-import { mainRouter } from '@/uff-api-routers';
+import { auth } from './routes/auth';
+import { profile } from './routes/profile';
+import { loggedUserMiddleware } from './middleware/user';
 
-const app = new Hono().route('/', mainRouter);
+const app = new Hono();
+
+app.use(loggedUserMiddleware);
+
+app.get('/', (c) => c.text('Hello from Hono!'));
+
+app.route('/auth', auth);
+app.route('/profile', profile);
 
 serve({ fetch: app.fetch, port: 3000 }).on('listening', () =>
   console.log('>>> API running on http://localhost:3000/')
