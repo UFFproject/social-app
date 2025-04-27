@@ -1,4 +1,4 @@
-import { Toaster } from '@libs/ui/sonner';
+import { Toaster } from '@/uff-ui';
 import './global.css';
 
 export const metadata = {

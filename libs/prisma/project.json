@@ -22,14 +22,14 @@
     "migrate-deploy": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "dotenv -- prisma migrate deploy --schema=./src/schema",
+        "command": "prisma migrate deploy --schema=./src/schema",
         "cwd": "libs/prisma"
       }
     },
     "migrate-dev": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "dotenv -- prisma migrate dev --schema=./src/schema --name={args.name}",
+        "command": "prisma migrate dev --schema=./src/schema --name={args.name}",
         "cwd": "libs/prisma"
       }
     },

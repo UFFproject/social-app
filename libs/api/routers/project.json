@@ -1,0 +1,20 @@
+{
+  "name": "api-router",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/api/routers/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/api/routers",
+        "main": "libs/api/routers/src/index.ts",
+        "tsConfig": "libs/api/routers/tsconfig.lib.json",
+        "assets": ["libs/api/routers/*.md"],
+        "format": ["cjs"]
+      }
+    }
+  }
+}
