@@ -3,8 +3,8 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@libs/ui/tooltip';
-import { Icons } from '@libs/ui/icons';
+} from '@/uff-ui';
+import { Icons } from '@/uff-ui';
 
 export default function SignupHeader() {
   return (
