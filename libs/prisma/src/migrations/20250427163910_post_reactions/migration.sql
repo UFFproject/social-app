@@ -1,3 +1,6 @@
+-- AlterTable
+ALTER TABLE "posts" ALTER COLUMN "textContent" SET NOT NULL;
+
 -- CreateTable
 CREATE TABLE "reaction_for_post" (
     "id" UUID NOT NULL,
