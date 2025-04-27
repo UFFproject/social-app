@@ -1,9 +1,9 @@
-import { Context, Next } from 'hono';
-import { getSignedCookie } from 'hono/cookie';
-import { decodeAuthToken } from '@uff/auth';
+import { decodeAuthToken } from '@/uff-auth';
 import { fetchUserById } from '@/uff-db';
+import { getSignedCookie } from 'hono/cookie';
+import { createMiddleware } from 'hono/factory';
 
-export async function loggedUserMiddleware(c: Context, next: Next) {
+export const loggedUserMiddleware = createMiddleware(async (c, next) => {
   const token = await getSignedCookie(
     c,
     process.env.COOKIE_SECRET as string,
@@ -12,9 +12,11 @@ export async function loggedUserMiddleware(c: Context, next: Next) {
 
   if (token) {
     const payload = await decodeAuthToken(token);
+
     if (payload) {
       const userId = payload.userId;
       const user = await fetchUserById(userId);
+
       if (user) {
         c.set('user', user);
       }
@@ -22,4 +24,4 @@ export async function loggedUserMiddleware(c: Context, next: Next) {
   }
 
   await next();
-}
+});

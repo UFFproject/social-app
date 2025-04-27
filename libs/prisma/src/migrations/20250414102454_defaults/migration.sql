@@ -1,8 +1,0 @@
--- AlterTable
-ALTER TABLE "profiles" ALTER COLUMN "nationality" DROP DEFAULT,
-ALTER COLUMN "fieldOfStudy" DROP DEFAULT,
-ALTER COLUMN "languages" DROP DEFAULT;
-
--- AlterTable
-ALTER TABLE "users" ALTER COLUMN "password" DROP DEFAULT,
-ALTER COLUMN "address" DROP DEFAULT;

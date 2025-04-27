@@ -1,10 +1,10 @@
-// import AuthBanner from '@/components/auth-banner';
-import React, { PropsWithChildren } from 'react';
+import { PropsWithChildren } from 'react';
+import { AuthBanner } from '@/uff-web-shared';
 
 export default function Layout({ children }: PropsWithChildren) {
   return (
     <div className="h-screen flex">
-      {/* <AuthBanner /> */}
+      <AuthBanner />
 
       <div className="flex-1 grid place-items-center p-4">
         <div className="w-full max-w-md">{children}</div>

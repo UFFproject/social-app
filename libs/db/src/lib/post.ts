@@ -1,28 +1,46 @@
-import { prisma } from './client';
+import { PostVisibility } from '@prisma/client';
+import { prisma } from '../client';
 
-type CreatePostInput = {
-  authorId: string;
-  communityId: string;
-  visibility: 'PUBLIC' | 'PRIVATE' | 'COMMUNITY_ONLY';
-  textContent?: string;
-  imagine?: string;
+export const getPosts = async () => {
+  return await prisma.post.findMany({
+    include: {
+      author: {
+        select: {
+          profile: {
+            select: {
+              name: true,
+              surname: true,
+            },
+          },
+        },
+      },
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
 };
 
-export async function createPost(input: CreatePostInput) {
-  try {
-    const post = await prisma.post.create({
-      data: {
-        authorId: input.authorId,
-        communityId: input.communityId,
-        visibility: input.visibility,
-        textContent: input.textContent ?? null,
-        imagine: input.imagine ?? null,
-      },
-    });
-
-    return post;
-  } catch (error) {
-    console.error('Error creating post:', error);
-    return null;
-  }
+interface CreatePostInput {
+  authorId: string;
+  textContent: string;
+  visibility: PostVisibility;
 }
+
+export const createPost = async (data: CreatePostInput) => {
+  return await prisma.post.create({
+    data,
+    include: {
+      author: {
+        select: {
+          profile: {
+            select: {
+              name: true,
+              surname: true,
+            },
+          },
+        },
+      },
+    },
+  });
+};

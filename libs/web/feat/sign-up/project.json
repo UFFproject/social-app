@@ -1,0 +1,9 @@
+{
+  "name": "sign-up",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/web/feat/sign-up/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project sign-up --web",
+  "targets": {}
+}

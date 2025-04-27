@@ -1,6 +1,4 @@
-import SignupFooter from '@/components/signup-footer';
-import SignupForm from '@/components/signup-form';
-import SignupHeader from '@/components/signup-header';
+import { SignupFooter, SignupForm, SignupHeader } from '@/uff-web-sign-up';
 
 export default function SignUpPage() {
   return (
