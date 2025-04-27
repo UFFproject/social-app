@@ -1,6 +1,6 @@
+import { getProfile, updateProfile } from '@/uff-db';
+import { editProfileSchema } from '@/uff-validators';
 import { zValidator } from '@hono/zod-validator';
-import { getProfile, updateProfile } from '@uff/db';
-import { editProfileSchema } from '@uff/validators';
 import { Hono } from 'hono';
 
 export const profileRouter = new Hono()
@@ -30,7 +30,7 @@ export const profileRouter = new Hono()
     return c.json(data);
   })
 
-  .put('/update', zValidator('json', editProfileSchema), async (c) => {
+  .put('/', zValidator('json', editProfileSchema), async (c) => {
     const user = c.get('user');
 
     if (!user) {

@@ -1,8 +1,9 @@
 import { serve } from '@hono/node-server';
 import { Hono } from 'hono';
-import { auth } from './routes/auth';
-import { profile } from './routes/profile';
+
+import { mainRouter } from '@/uff-api-routers';
 import { cors } from 'hono/cors';
+import { loggedUserMiddleware } from './middleware/user';
 
 const app = new Hono();
 
@@ -13,10 +14,9 @@ app.use(
   })
 );
 
-app.get('/', (c) => c.text('Hello from Hono!'));
+app.use(loggedUserMiddleware);
 
-app.route('/auth', auth);
-app.route('/profile', profile);
+app.route('/', mainRouter);
 
 serve({ fetch: app.fetch, port: 3000 }).on('listening', () =>
   console.log('>>> API running on http://localhost:3000/')

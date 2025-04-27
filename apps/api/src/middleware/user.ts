@@ -1,5 +1,5 @@
-import { decodeAuthToken } from '@uff/auth';
-import { fetchUserById } from '@uff/db';
+import { decodeAuthToken } from '@/uff-auth';
+import { fetchUserById } from '@/uff-db';
 import { getSignedCookie } from 'hono/cookie';
 import { createMiddleware } from 'hono/factory';
 

@@ -1,6 +1,7 @@
+import { createPost, getPosts } from '@/uff-db';
+import { createPostSchema } from '@/uff-validators';
 import { zValidator } from '@hono/zod-validator';
-import { createPost, getPosts } from '@uff/db';
-import { createPostSchema } from '@uff/validators';
+
 import { Hono } from 'hono';
 
 export const postRouter = new Hono()
