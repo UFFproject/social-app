@@ -1,11 +1,12 @@
 services:
-  postgres:
+  uff-database:
     image: postgres:17.4-alpine
-    container_name: uff-postgres
+    container_name: uff-database
+    platform: linux/x86_64
     environment:
       POSTGRES_USER: 'uff'
-      POSTGRES_PASSWORD: 'Sup3rSecre!P4ssw0rd'
       POSTGRES_DB: 'uffdb'
+      POSTGRES_HOST_AUTH_METHOD: 'trust'
       PGDATA: '/data/postgres'
     ports:
       - '5432:5432'
@@ -13,24 +14,43 @@ services:
     volumes:
       - db:/data/postgres
 
-  node-app:
+  uff-api:
     build:
       context: .
       dockerfile: ./apps/api/Dockerfile
-    container_name: hono-app
+    container_name: uff-api
+    env_file:
+      - .env.development
     ports:
       - '3000:3000'
-    environment:
-      - DATABASE_URL=postgresql://uff:Sup3rSecre!P4ssw0rd@postgres:5432/uffdb?schema=public
-      - NODE_ENV=development
+      - '9229:9229'
     depends_on:
-      - postgres
+      - uff-database
     restart: unless-stopped
     volumes:
-      - ./apps/api:/usr/src/app/apps/api
+      - .:/app
+      - /app/node_modules
+      - pnpm-store:/pnpm/store
+
+  uff-web:
+    build:
+      context: .
+      dockerfile: apps/uff/Dockerfile
+    container_name: uff-web
+    ports:
+      - '4000:4000'
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - uff-api
+      - uff-database
+    restart: unless-stopped
+    volumes:
+      - ./apps/uff:/usr/src/app/apps/uff
       - ./libs:/usr/src/app/libs
       - /usr/src/app/node_modules
-      - /usr/src/app/apps/api/node_modules
+      - /usr/src/app/apps/uff/node_modules
 
 volumes:
   db:
+  pnpm-store:

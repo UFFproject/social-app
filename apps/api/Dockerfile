@@ -1,20 +1,28 @@
-FROM node:20-alpine AS base
+FROM node:22-slim AS base
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
 
-WORKDIR /usr/src/app
+ENV NX_DAEMON="false"
+ENV NX_WORKSPACE_ROOT="/app"
 
-RUN npm install -g pnpm
+RUN corepack enable
 
-COPY package.json pnpm-lock.yaml nx.json ./
+RUN apt-get update -y \
+&& apt-get install -y openssl procps
 
+WORKDIR /app
+
+RUN pnpm config set store-dir /pnpm/store
+
+# Installing dependencies with caching
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN pnpm install
-
 COPY . .
 
-FROM base AS api-dev
-
-# Generate Prisma client
-RUN pnpm prisma generate
-
 EXPOSE 3000
+EXPOSE 9229
 
-CMD ["pnpm", "nx", "serve", "api", "--host", "0.0.0.0"] 
+# Build prisma client
+RUN pnpm nx run prisma:generate
+
+CMD [ "pnpm", "nx", "serve", "api" ]

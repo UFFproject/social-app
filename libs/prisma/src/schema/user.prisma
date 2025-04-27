@@ -1,17 +1,8 @@
-generator client {
-  provider = "prisma-client-js"
-}
-
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
 model User {
   id       String  @id @default(uuid(7)) @db.Uuid
   email    String  @unique @db.VarChar(100)
-  password String  @default("changeme") @db.VarChar(255)
-  address  String  @default("Unknown") @db.Text
+  password String  @db.VarChar(255)
+  address  String  @db.Text
   isActive Boolean @default(true)
 
   profile Profile?
@@ -30,15 +21,15 @@ model User {
 }
 
 model Profile {
-  id           String   @id @default(uuid(7)) @db.Uuid
+  id           String    @id @default(uuid(7)) @db.Uuid
   name         String?
   surname      String?
-  dateOfBirth  DateTime
-  gender       String
-  nationality  String   @default("Unknown") @db.Text
-  fieldOfStudy String   @default("Unknown") @db.Text
-  yearOfStudy  Int
-  languages    String   @default("Unknown") @db.Text
+  dateOfBirth  DateTime?
+  gender       String?
+  nationality  String?   @db.Text
+  fieldOfStudy String?   @db.Text
+  yearOfStudy  Int?
+  languages    String?   @db.Text
   relationship String?
 
   userId String @unique @db.Uuid

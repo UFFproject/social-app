@@ -31,7 +31,7 @@
           "watchDepsName": "watch-deps"
         }
       },
-      "exclude": ["libs/db/*"]
+      "exclude": ["libs/db/*", "libs/auth/*"]
     },
     {
       "plugin": "@nx/next/plugin",
@@ -64,11 +64,11 @@
       "options": {
         "targetName": "test"
       },
-      "exclude": ["hono-e2e/**/*", "apps/hono-e2e/**/*"]
+      "exclude": ["api-e2e/**/*", "apps/api-e2e/**/*"]
     },
     {
       "plugin": "@nx/js/typescript",
-      "include": ["libs/db/*"],
+      "include": ["libs/db/*", "libs/auth/*"],
       "options": {
         "typecheck": {
           "targetName": "typecheck"
