@@ -20,6 +20,7 @@ export * from './dialog';
 export * from './date-picker';
 export * from './command';
 export * from './sidebar';
+export * from './tabs';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

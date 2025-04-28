@@ -27,6 +27,7 @@
       "@/uff-ui": ["libs/ui/src/index.ts"],
       "@/uff-validators": ["libs/validators/src/index.ts"],
       "@/uff-web-dashboard": ["libs/web/feat/dashboard/src/index.ts"],
+      "@/uff-web-profile": ["libs/web/feat/profile/src/index.ts"],
       "@/uff-web-settings": ["libs/web/feat/settings/src/index.ts"],
       "@/uff-web-shared": ["libs/web/shared/src/index.ts"],
       "@/uff-web-sign-in": ["libs/web/feat/sign-in/src/index.ts"],
