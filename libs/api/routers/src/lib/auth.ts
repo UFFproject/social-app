@@ -16,7 +16,7 @@ export const authRouter = new Hono()
       return c.json({ error: 'Bad request' }, 400);
     }
 
-    const { email, password } = c.req.valid('json');
+    const { email, password, remember } = c.req.valid('json');
 
     const user = await fetchUserByEmail(email);
 
@@ -31,7 +31,7 @@ export const authRouter = new Hono()
 
     const isPasswordValid = await verifyUserPassword(password, user.password);
 
-    if (!isPasswordValid || !user.isActive) {
+    if (!isPasswordValid) {
       return c.json(
         {
           error: 'Invalid credentials',
@@ -51,6 +51,7 @@ export const authRouter = new Hono()
       );
     }
 
+
     await setSignedCookie(
       c,
       'token',
@@ -60,6 +61,7 @@ export const authRouter = new Hono()
         httpOnly: true,
         sameSite: 'Lax',
         secure: true,
+        maxAge: remember ? 60 * 60 * 24 * 30 : undefined, // 30 days
       }
     );
 

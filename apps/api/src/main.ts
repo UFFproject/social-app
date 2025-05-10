@@ -8,6 +8,7 @@ import { loggedUserMiddleware } from './middleware/user';
 const app = new Hono();
 
 app.use(
+  "*",
   cors({
     origin: 'http://localhost:4000',
     credentials: true,
