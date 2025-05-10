@@ -1,8 +1,8 @@
-import { client } from '@uff/rpc/client';
-import { CreatePostValues } from '@uff/validators';
+import { client } from '@/uff-api-client';
+import { CreatePostValues } from '@/uff-validators';
 
 export async function createPost(values: CreatePostValues) {
-  const res = await client.post.$post({
+  const res = await client.api.v1.post.$post({
     json: values,
   });
 
@@ -15,7 +15,7 @@ export async function createPost(values: CreatePostValues) {
 }
 
 export async function getPosts() {
-  const res = await client.post.$get();
+  const res = await client.api.v1.post.$get();
 
   return await res.json();
 }

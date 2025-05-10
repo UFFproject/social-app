@@ -1,8 +1,8 @@
-import { client } from '@uff/rpc/client';
-import { EditProfileValues } from '@uff/validators';
+import { client } from '@/uff-api-client';
+import { EditProfileValues } from '@/uff-validators';
 
 export async function getProfile() {
-  const res = await client.profile.$get();
+  const res = await client.api.v1.profile.$get();
   const data = await res.json();
 
   if ('error' in data) {
@@ -13,7 +13,7 @@ export async function getProfile() {
 }
 
 export async function editProfile(values: EditProfileValues) {
-  const res = await client.profile.update.$put({
+  const res = await client.api.v1.profile.$put({
     json: values,
   });
 
