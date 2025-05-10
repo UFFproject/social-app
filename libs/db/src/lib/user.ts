@@ -16,11 +16,12 @@ export async function fetchUserByEmail(email: string) {
 }
 
 export async function createUser(data: CreateUserPayload) {
+  // FIXME: Remove isActive after confirmation email is implemented
   return await prisma.user.create({
     data: {
       email: data.email,
       password: data.hashedPassword,
-      isActive: false,
+      isActive: true,
       profile: {
         create: {
           name: data.forename,
