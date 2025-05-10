@@ -40,7 +40,7 @@ export const authRouter = new Hono()
       );
     }
 
-    const token = await createAuthToken(user);
+    const token = await createAuthToken(user, remember ?? false);
 
     if (!token) {
       return c.json(
@@ -61,7 +61,7 @@ export const authRouter = new Hono()
         httpOnly: true,
         sameSite: 'Lax',
         secure: true,
-        maxAge: remember ? 60 * 60 * 24 * 30 : undefined, // 30 days
+        maxAge: remember ? Math.floor(30 * 24 * 60 * 60) : undefined, // 30 days
       }
     );
 
@@ -128,7 +128,7 @@ export const authRouter = new Hono()
       );
     }
 
-    const token = await createAuthToken(user);
+    const token = await createAuthToken(user, true);
 
     if (!token)
       return c.json(
@@ -140,7 +140,13 @@ export const authRouter = new Hono()
       c,
       'token',
       token,
-      process.env.COOKIE_SECRET as string
+      process.env.COOKIE_SECRET as string,
+      {
+        httpOnly: true,
+        sameSite: 'Lax',
+        secure: true,
+        maxAge: Math.floor(30 * 24 * 60 * 60), // 30 days
+      }
     );
 
     return c.json({ success: true, token: token });

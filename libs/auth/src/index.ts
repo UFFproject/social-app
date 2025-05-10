@@ -1,9 +1,13 @@
 import * as bcryptjs from 'bcryptjs';
 import { sign, verify } from 'hono/jwt';
 import { User } from '@prisma/client';
-import { JWTPayload } from 'hono/utils/jwt/types';
+import {
+  JWTPayload,
+  JwtTokenExpired,
+  JwtTokenInvalid,
+} from 'hono/utils/jwt/types';
 
-interface JwtAuthTokenPayload extends JWTPayload {
+export interface JwtAuthTokenPayload extends JWTPayload {
   userId: string;
 }
 
@@ -18,17 +22,21 @@ export async function hashPassword(password: string) {
   return bcryptjs.hash(password, 12);
 }
 
-export async function createAuthToken(user: User) {
+export async function createAuthToken(user: User, rememberMe: boolean) {
   const secret = process.env.JWT_ACCESS_SECRET;
 
   if (!secret) return null;
 
   if (!user || !user.id) return null;
 
+  console.log("rememberMe:", rememberMe);
+
+  const expInSeconds = rememberMe ? 30 * 24 * 60 * 60 : 60 * 60; // 30 days or 1 hour
+
   return sign(
     {
       userId: user.id,
-      exp: Math.floor(Date.now() / 1000) + 60 * 60, // Token expires in 60 minutes
+      exp: Math.floor(Date.now() / 1000) + expInSeconds,
     },
     secret
   );
@@ -39,7 +47,21 @@ export async function decodeAuthToken(token: string) {
 
   if (!secret) return false;
 
-  const payload = <JwtAuthTokenPayload>await verify(token, secret);
+  let payload: JwtAuthTokenPayload;
+
+  try {
+    payload = <JwtAuthTokenPayload>await verify(token, secret);
+  } catch (e) {
+    if (e instanceof JwtTokenExpired || e instanceof JwtTokenInvalid) {
+      console.error('Token expired or invalid:', e);
+      console.log('Token:', );
+      return false;
+    }
+    // FIXME: Add logging
+    console.error('Uknown error during a decoding token:', e);
+    return false;
+  }
+
   if (!payload.userId) return false;
 
   return payload;
