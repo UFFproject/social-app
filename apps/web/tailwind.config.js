@@ -6,7 +6,7 @@ const { join } = require('path');
 module.exports = {
   ...TailwindConfig,
   content: [
-    ...TailwindConfig.content,
+    ...(Array.isArray(TailwindConfig.content) ? TailwindConfig.content : [TailwindConfig.content]),
     join(
       __dirname,
       '{src,pages,components,app}/**/*!(*.stories|*.spec).{ts,tsx,html}'
